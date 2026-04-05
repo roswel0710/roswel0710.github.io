@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosewal Almeida | Data & Retail Analytics</title>
+
+<!-- ═══ CACHE BUSTING ═══ -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:    #09090b;
+  --deep:     #111113;
+  --charcoal: #1a1a1f;
+  --gold:     #d4a843;
+  --gold-l:   #e8c76a;
+  --gold-d:   #b8922e;
+  --amber:    #f59e0b;
+  --cream:    #faf0d7;
+  --white:    #f5f5f0;
+  --grey:     #9ca3af;
+  --grey-d:   #3f3f46;
+  --grey-l:   #d4d4d8;
+  --card-bg:  rgba(255,255,255,0.03);
+  --border:   rgba(212,168,67,0.15);
+  --border-h: rgba(212,168,67,0.4);
+  --radius:   14px;
+  --glow:     0 0 40px rgba(212,168,67,0.2);
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--gold-d) var(--black); }
+body { font-family: var(--font-body); background: var(--black); color: var(--white); line-height: 1.7; overflow-x: hidden; }
+::selection { background: var(--gold-d); color: var(--black); }
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--gold-l); }
+
+/* ═══ INTERACTIVE CANVAS BACKGROUND ═══ */
+#bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Custom cursor */
+#cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none; transform: translate(-50%,-50%);
+  mix-blend-mode: screen;
+  transition: transform 0.1s;
+}
+#cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(212,168,67,0.45);
+  pointer-events: none; transform: translate(-50%,-50%);
+  transition: width 0.25s, height 0.25s, border-color 0.25s;
+}
+
+/* Section backgrounds */
+#hero    { background: radial-gradient(ellipse 80% 70% at 65% 50%, rgba(212,168,67,0.08) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 15% 80%, rgba(184,146,46,0.05) 0%, transparent 60%) !important; }
+#about   { background: rgba(17,17,19,0.82) !important; }
+#projects { background: rgba(9,9,11,0.82) !important; }
+#certifications { background: rgba(17,17,19,0.82) !important; }
+#contact { background: rgba(9,9,11,0.88) !important; }
+
+/* ═══ NAVIGATION ═══ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(9,9,11,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 6%; height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+  background: linear-gradient(90deg, var(--gold), var(--gold-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--grey); letter-spacing: 0.03em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.nav-toggle span { width: 24px; height: 2px; background: var(--grey); transition: all 0.3s; }
+
+/* ═══ SECTIONS ═══ */
+section { padding: 100px 6%; position: relative; z-index: 1; }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 2.5rem;
+  background: linear-gradient(120deg, var(--white) 40%, var(--grey-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.25), transparent); margin: 0 6%; position: relative; z-index: 1; }
+
+/* ═══ HERO ═══ */
+#hero {
+  min-height: 100vh; display: flex; align-items: center; padding: 80px 6% 60px;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 400px;
+  gap: 5rem; align-items: center; max-width: 1120px; margin: 0 auto; width: 100%;
+}
+.hero-tagline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.25);
+  color: var(--gold); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 99px; margin-bottom: 1.4rem;
+}
+.hero-tagline::before {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--gold);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.4; transform:scale(1.5); } }
+
+.hero-name {
+  font-family: var(--font-display); font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
+  color: var(--white); margin-bottom: 1.1rem;
+}
+.grad {
+  background: linear-gradient(100deg, var(--gold), var(--gold-l), var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { font-size: 1.05rem; color: var(--grey); max-width: 500px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
+
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
+  border-radius: var(--radius); font-weight: 600; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.22s; text-decoration: none !important; font-family: var(--font-body);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black); box-shadow: 0 4px 20px rgba(212,168,67,0.3);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,168,67,0.45); color: var(--black); }
+.btn-outline { background: transparent; border: 1.5px solid rgba(212,168,67,0.35); color: var(--grey-l); }
+.btn-outline:hover { border-color: var(--gold); color: var(--white); transform: translateY(-3px); }
+
+/* Hero photo */
+.hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+.photo-tilt { position: relative; transform: rotate(3deg); transition: transform 0.4s ease; }
+.photo-tilt:hover { transform: rotate(0deg) scale(1.02); }
+.photo-frame {
+  width: 240px; aspect-ratio: 3/4; border-radius: 24px;
+  overflow: hidden; border: 1px solid rgba(212,168,67,0.3);
+  box-shadow: 0 0 0 1px rgba(212,168,67,0.1), 0 30px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+}
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.photo-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(212,168,67,0.15) 100%);
+  pointer-events: none;
+}
+.photo-accent {
+  position: absolute; width: 240px; aspect-ratio: 3/4;
+  border-radius: 24px; border: 1px solid rgba(212,168,67,0.2);
+  transform: rotate(7deg) translate(12px, 10px); z-index: -1;
+}
+.photo-glow {
+  position: absolute; width: 144px; height: 144px;
+  background: radial-gradient(circle, rgba(212,168,67,0.35), transparent 70%);
+  border-radius: 50%; bottom: -30px; right: -30px;
+  filter: blur(35px); z-index: -1;
+}
+
+/* ═══ ABOUT ═══ */
+.about-text p { color: var(--grey); margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
+.about-text p strong { color: var(--white); font-weight: 600; }
+.stat-row { display: flex; gap: 2.5rem; margin-top: 2.2rem; flex-wrap: wrap; }
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--font-display); font-size: 2.3rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), var(--gold-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+}
+.stat-desc { font-size: 0.78rem; color: var(--grey); margin-top: 5px; font-weight: 500; }
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.75rem; }
+.skill-tag {
+  background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
+  color: var(--grey-l); padding: 5px 13px; border-radius: 99px;
+  font-size: 0.8rem; font-weight: 500; transition: all 0.2s;
+}
+.skill-tag:hover { background: rgba(212,168,67,0.18); color: var(--white); border-color: var(--gold); }
+
+/* ═══ PROJECTS ═══ */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+.project-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.8rem;
+  border-left: 3px solid var(--gold-d);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.project-card:nth-child(2n) { border-left-color: var(--gold); }
+.project-card:nth-child(3n) { border-left-color: var(--grey-d); }
+.project-card:hover { border-color: rgba(212,168,67,0.45); transform: translateY(-4px); box-shadow: var(--glow); }
+.project-emoji { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+.project-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--white); margin-bottom: 0.7rem; line-height: 1.3; }
+.project-desc { font-size: 0.9rem; color: var(--grey); line-height: 1.7; margin-bottom: 1.2rem; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.project-tag {
+  background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
+  color: var(--gold); font-size: 0.72rem; padding: 3px 10px; border-radius: 99px;
+}
+.project-links { display: flex; gap: 0.8rem; }
+.project-link {
+  font-size: 0.8rem; font-weight: 600; color: var(--gold);
+  transition: color 0.2s; text-decoration: none !important;
+}
+.project-link:hover { color: var(--gold-l); }
+
+/* ═══ CERTIFICATIONS ═══ */
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+.cert-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.4rem;
+  border-left: 3px solid var(--gold-d);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.cert-card:nth-child(2n) { border-left-color: var(--gold); }
+.cert-card:nth-child(3n) { border-left-color: var(--grey-d); }
+.cert-card:hover { border-color: rgba(212,168,67,0.45); transform: translateY(-3px); box-shadow: var(--glow); }
+.cert-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+.cert-title { font-family: var(--font-display); font-size: 0.95rem; color: var(--white); line-height: 1.4; }
+.cert-date {
+  font-size: 0.72rem; font-weight: 600; color: var(--gold);
+  background: rgba(212,168,67,0.1); padding: 3px 9px; border-radius: 99px;
+  border: 1px solid rgba(212,168,67,0.2); white-space: nowrap; flex-shrink: 0;
+}
+.cert-issuer { font-size: 0.82rem; color: var(--grey); margin-bottom: 0.75rem; }
+.cert-skills { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.85rem; }
+.cert-skill {
+  background: rgba(212,168,67,0.06); border: 1px solid rgba(212,168,67,0.15);
+  color: var(--grey-l); font-size: 0.7rem; padding: 2px 9px; border-radius: 99px;
+}
+.cert-footer { border-top: 1px solid rgba(212,168,67,0.1); padding-top: 0.7rem; display: flex; justify-content: flex-end; margin-top: auto; }
+.cert-link { font-size: 0.75rem; font-weight: 600; color: var(--gold); text-decoration: none !important; transition: color 0.2s; }
+.cert-link:hover { color: var(--gold-l); }
+
+/* ═══ CONTACT ═══ */
+#contact .section-inner { text-align: center; }
+.contact-sub { font-size: 1.05rem; color: var(--grey); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.8; }
+.contact-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-c {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+  border-radius: var(--radius); font-weight: 600; font-size: 0.88rem;
+  transition: all 0.22s; text-decoration: none !important; font-family: var(--font-body);
+}
+.btn-c-primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black); box-shadow: 0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-c-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,168,67,0.4); color: var(--black); }
+.btn-c-ghost { background: transparent; border: 1.5px solid rgba(212,168,67,0.3); color: var(--grey-l); }
+.btn-c-ghost:hover { border-color: var(--gold); color: var(--white); transform: translateY(-3px); }
+
+.footer-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent); margin: 2rem 0; }
+.footer-copy { font-size: 0.78rem; color: var(--grey-d); }
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+.reveal-d6 { transition-delay: 0.6s; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  nav { padding: 0 4%; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; background: rgba(9,9,11,0.95);
+    backdrop-filter: blur(20px); padding: 1.5rem 4%; gap: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: flex; }
+  section { padding: 60px 5%; }
+  .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-btns { justify-content: center; }
+  .hero-photo-wrap { justify-content: center; }
+  .photo-frame { width: 200px; }
+  .photo-accent { width: 200px; }
+  .stat-row { justify-content: center; }
+  .skills-list { justify-content: center; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .contact-btns { flex-direction: column; align-items: center; }
+  #cursor-dot, #cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Canvas for interactive hex grid -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo">RA</div>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tagline">Retail Analytics · Data · FMCG</div>
+      <h1 class="hero-name">Hey! I'm Rosewal —<br><span class="grad">Let's explore my journey...</span></h1>
+      <p class="hero-sub">A data enthusiast who dives deep into numbers, dashboards, and meaningful insights. Microsoft Certified (PL-300) Data Analyst with 7+ years of retail and FMCG experience — turning complex data into smarter business decisions using Power BI, SQL, and Python.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          View My Work
+        </a>
+        <a href="#contact" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Let's Connect
+        </a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="photo-tilt">
+        <div class="photo-frame">
+          <img src="Rosssss.jpg" alt="Rosewal Almeida">
+        </div>
+        <div class="photo-accent"></div>
+        <div class="photo-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">If you're wondering…</p>
+      <h2 class="section-title">Why Me?</h2>
+    </div>
+    <div class="about-text reveal reveal-d1">
+      <p>I'm a customer-focused retail leader with <strong>7+ years of experience</strong> in fast-paced, high-footfall environments. My journey spans managing a Sainsbury's store in Scotland — leading a team of 40, driving <strong>24% year-on-year sales growth</strong>, and generating <strong>£945K+ monthly revenue</strong> — to executing trade marketing across <strong>1,000+ outlets</strong> at ITC Limited in India.</p>
+      <p>Today, I combine that frontline business understanding with a <strong>Microsoft PL-300 certification</strong> and strong technical skills in Power BI, SQL, and Python to build dashboards and analytics solutions that don't just look good — they solve real problems and drive action.</p>
+    </div>
+    <div class="stat-row reveal reveal-d2">
+      <div class="stat"><div class="stat-num">7+</div><div class="stat-desc">Years in Retail & Analytics</div></div>
+      <div class="stat"><div class="stat-num">24%</div><div class="stat-desc">YoY Sales Growth</div></div>
+      <div class="stat"><div class="stat-num">1000+</div><div class="stat-desc">Outlets Managed</div></div>
+      <div class="stat"><div class="stat-num">£945K</div><div class="stat-desc">Monthly Revenue Led</div></div>
+    </div>
+    <div class="skills-list reveal reveal-d3">
+      <span class="skill-tag">Power BI</span>
+      <span class="skill-tag">DAX</span>
+      <span class="skill-tag">Power Query</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">PostgreSQL</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">Pandas</span>
+      <span class="skill-tag">NumPy</span>
+      <span class="skill-tag">Matplotlib</span>
+      <span class="skill-tag">Seaborn</span>
+      <span class="skill-tag">scikit-learn</span>
+      <span class="skill-tag">Excel</span>
+      <span class="skill-tag">IBM Cognos</span>
+      <span class="skill-tag">Looker Studio</span>
+      <span class="skill-tag">Google Analytics 4</span>
+      <span class="skill-tag">Retail Analytics</span>
+      <span class="skill-tag">FMCG</span>
+      <span class="skill-tag">Trade Marketing</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">I'll let my work do the talking…</p>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal reveal-d1">
+        <span class="project-emoji">📊</span>
+        <h3 class="project-title">Blinkit Sales Analysis Dashboard</h3>
+        <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations. Used advanced SQL for aggregation and DAX measures to build an executive-ready dashboard for decision-making.</p>
+        <div class="project-tags">
+          <span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span>
+        </div>
+        <div class="project-links">
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" class="project-link">Live Dashboard ↗</a>
+          <a href="https://github.com/roswel0710/Blinkit-Project/blob/main/README.md" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d2">
+        <span class="project-emoji">🌿</span>
+        <h3 class="project-title">Plant Co. Performance Report</h3>
+        <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity. Implemented Switch Measures in DAX for instant metric toggling and highlighted underperforming accounts with variance analysis.</p>
+        <div class="project-tags">
+          <span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span>
+        </div>
+        <div class="project-links">
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda" target="_blank" class="project-link">Live Dashboard ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d3">
+        <span class="project-emoji">🛒</span>
+        <h3 class="project-title">Retail Loyalty Program Analytics</h3>
+        <p class="project-desc">Designed advanced SQL queries on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention. Calculated CLV, churn rate, and repeat purchase rates with Python visualisations.</p>
+        <div class="project-tags">
+          <span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/roswel0710/Retail-Loyalty.git" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d4">
+        <span class="project-emoji">🔍</span>
+        <h3 class="project-title">Advanced SQL Data Analytics</h3>
+        <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation. Used window functions, CTEs, and analytical views for business-ready reports.</p>
+        <div class="project-tags">
+          <span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/roswel0710/SQL-Data-Analytics-Project.git" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d5">
+        <span class="project-emoji">🎓</span>
+        <h3 class="project-title">Developer Survey Capstone</h3>
+        <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey. Used Python, SQL, and Looker Studio for advanced visualisations.</p>
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/roswel0710/CapstoneProject.git" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d6">
+        <span class="project-emoji">📚</span>
+        <h3 class="project-title">Library Database Management</h3>
+        <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance. Used stored procedures, triggers, and advanced SQL for operational reporting.</p>
+        <div class="project-tags">
+          <span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/roswel0710/Library-Database-Management.git" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ CERTIFICATIONS ═══ -->
+<section id="certifications">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">Here's a bundle of my verified credentials</p>
+      <h2 class="section-title">Certifications</h2>
+    </div>
+    <div class="certs-grid">
+
+      <div class="cert-card reveal reveal-d1">
+        <div class="cert-header">
+          <span class="cert-title">Power BI Data Analyst Associate (PL-300)</span>
+          <span class="cert-date">Sep 2025</span>
+        </div>
+        <div class="cert-issuer">Microsoft</div>
+        <div class="cert-skills">
+          <span class="cert-skill">Power BI</span><span class="cert-skill">DAX</span><span class="cert-skill">Data Modelling</span><span class="cert-skill">Power Query</span>
+        </div>
+        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
+      </div>
+
+      <div class="cert-card reveal reveal-d2">
+        <div class="cert-header">
+          <span class="cert-title">Associate Data Analyst in SQL</span>
+          <span class="cert-date">Jul 2025</span>
+        </div>
+        <div class="cert-issuer">DataCamp</div>
+        <div class="cert-skills">
+          <span class="cert-skill">SQL</span><span class="cert-skill">Data Analysis</span><span class="cert-skill">PostgreSQL</span>
+        </div>
+        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
+      </div>
+
+      <div class="cert-card reveal reveal-d3">
+        <div class="cert-header">
+          <span class="cert-title">IBM Data Analyst Professional Certificate</span>
+          <span class="cert-date">Jun 2025</span>
+        </div>
+        <div class="cert-issuer">Coursera / IBM</div>
+        <div class="cert-skills">
+          <span class="cert-skill">Data Analysis</span><span class="cert-skill">Python</span><span class="cert-skill">IBM Cognos</span><span class="cert-skill">Excel</span>
+        </div>
+        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
+      </div>
+
+      <div class="cert-card reveal reveal-d4">
+        <div class="cert-header">
+          <span class="cert-title">Google Analytics 4 Certification</span>
+          <span class="cert-date">Jul 2024</span>
+        </div>
+        <div class="cert-issuer">Google</div>
+        <div class="cert-skills">
+          <span class="cert-skill">Google Analytics</span><span class="cert-skill">Web Analytics</span><span class="cert-skill">GA4</span>
+        </div>
+        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
+      </div>
+
+      <div class="cert-card reveal reveal-d5">
+        <div class="cert-header">
+          <span class="cert-title">Excel Essential Training</span>
+          <span class="cert-date">Jun 2024</span>
+        </div>
+        <div class="cert-issuer">LinkedIn Learning</div>
+        <div class="cert-skills">
+          <span class="cert-skill">Excel</span><span class="cert-skill">PivotTables</span><span class="cert-skill">Dashboards</span>
+        </div>
+        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">I'd love to hear from you…</p>
+      <h2 class="section-title">Let's Work Together</h2>
+    </div>
+    <p class="contact-sub reveal reveal-d1">Whether you're looking for a data analyst, want to collaborate on a project, or just want to talk analytics and retail — my inbox is always open.</p>
+    <div class="contact-btns reveal reveal-d2">
+      <a href="mailto:ros123almeida@gmail.com" class="btn-c btn-c-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email Me
+      </a>
+      <a href="https://www.linkedin.com/in/rosewal-almeida/" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/roswel0710" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S9 17.44 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub
+      </a>
+      <a href="https://drive.google.com/file/d/1cModsguA-c1R7PkuTbc52qonUXaZnzqE/view?usp=sharing" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+    <hr class="footer-divider"/>
+    <p class="footer-copy">© 2026 Rosewal Almeida · Designed & Built with ♥</p>
+  </div>
+</section>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* ── Custom Cursor ── */
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx = -100, my = -100, rx = -100, ry = -100;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+
+function cursorLoop() {
+  rx += (mx - rx) * 0.15;
+  ry += (my - ry) * 0.15;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(cursorLoop);
+}
+cursorLoop();
+
+/* Grow ring on hover over links/buttons */
+document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width = '52px'; ring.style.height = '52px';
+    ring.style.borderColor = 'rgba(212,168,67,0.7)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '36px'; ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(212,168,67,0.45)';
+  });
+});
+
+/* ── Interactive Hex Grid Background ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, hexes = [];
+const SIZE = 42;
+const mouse = { x: -999, y: -999 };
+
+document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+function hexCorner(cx, cy, s, i) {
+  const angle = Math.PI / 180 * (60 * i - 30);
+  return { x: cx + s * Math.cos(angle), y: cy + s * Math.sin(angle) };
+}
+
+function buildGrid() {
+  hexes = [];
+  const w = SIZE * Math.sqrt(3);
+  const h = SIZE * 2;
+  const cols = Math.ceil(W / w) + 2;
+  const rows = Math.ceil(H / (h * 0.75)) + 2;
+  for (let row = -1; row < rows; row++) {
+    for (let col = -1; col < cols; col++) {
+      const cx = col * w + (row % 2 === 0 ? 0 : w / 2);
+      const cy = row * h * 0.75;
+      hexes.push({ cx, cy, phase: Math.random() * Math.PI * 2, speed: 0.006 + Math.random() * 0.008, baseAlpha: Math.random() * 0.06 + 0.03 });
+    }
+  }
+}
+
+function resizeBg() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resizeBg(); buildGrid();
+window.addEventListener('resize', () => { resizeBg(); buildGrid(); });
+
+/* Auto ripples */
+const ripples = [];
+function spawnRipple(x, y) {
+  ripples.push({
+    x: x != null ? x : Math.random() * W,
+    y: y != null ? y : Math.random() * H,
+    r: 0,
+    maxR: 240 + Math.random() * 160,
+    speed: 2 + Math.random(),
+    color: Math.random() < 0.5 ? '212,168,67' : '184,146,46'
+  });
+}
+setInterval(() => spawnRipple(), 1600);
+spawnRipple(); spawnRipple(window.innerWidth * 0.5, window.innerHeight * 0.5);
+
+/* Click = ripple at cursor */
+document.addEventListener('click', () => spawnRipple(mouse.x, mouse.y));
+
+/* Floating particles */
+const floaters = Array.from({ length: 45 }, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  vy: -(0.25 + Math.random() * 0.45),
+  vx: (Math.random() - 0.5) * 0.15,
+  alpha: Math.random() * 0.3 + 0.06,
+  size: Math.random() * 1.8 + 0.4,
+  col: Math.random() < 0.5 ? '212,168,67' : Math.random() < 0.5 ? '184,146,46' : '156,163,175',
+}));
+
+function drawHex(cx, cy, s) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const p = hexCorner(cx, cy, s, i);
+    i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+  }
+  ctx.closePath();
+}
+
+function bgLoop() {
+  ctx.clearRect(0, 0, W, H);
+
+  /* Update & cull ripples */
+  for (let k = ripples.length - 1; k >= 0; k--) {
+    ripples[k].r += ripples[k].speed;
+    if (ripples[k].r > ripples[k].maxR) ripples.splice(k, 1);
+  }
+
+  /* Hex cells */
+  hexes.forEach(h => {
+    h.phase += h.speed;
+    const pulseVal = Math.sin(h.phase) * 0.5 + 0.5;
+    const mdx = mouse.x - h.cx, mdy = mouse.y - h.cy;
+    const md = Math.sqrt(mdx * mdx + mdy * mdy);
+    const mouseInfluence = Math.max(0, 1 - md / 160);
+
+    let rippleInfluence = 0, rippleColor = '212,168,67';
+    ripples.forEach(rip => {
+      const rdx = rip.x - h.cx, rdy = rip.y - h.cy;
+      const rd = Math.sqrt(rdx * rdx + rdy * rdy);
+      const ring = Math.abs(rd - rip.r);
+      const inf = ring < 30 ? (1 - ring / 30) * (1 - rip.r / rip.maxR) : 0;
+      if (inf > rippleInfluence) { rippleInfluence = inf; rippleColor = rip.color; }
+    });
+
+    const alpha = h.baseAlpha + pulseVal * 0.05 + mouseInfluence * 0.35 + rippleInfluence * 0.45;
+    const strokeCol = mouseInfluence > 0.25
+      ? `rgba(232,199,106,${alpha})`
+      : rippleInfluence > 0.08
+        ? `rgba(${rippleColor},${alpha})`
+        : `rgba(212,168,67,${alpha})`;
+
+    if (mouseInfluence > 0.35 || rippleInfluence > 0.25) {
+      drawHex(h.cx, h.cy, SIZE - 1);
+      const fillA = mouseInfluence * 0.1 + rippleInfluence * 0.12;
+      const col = mouseInfluence > 0.35 ? '232,199,106' : rippleColor;
+      ctx.fillStyle = `rgba(${col},${fillA})`;
+      ctx.fill();
+    }
+
+    drawHex(h.cx, h.cy, SIZE - 1);
+    ctx.strokeStyle = strokeCol;
+    ctx.lineWidth = mouseInfluence > 0.5 ? 1.2 : 0.8;
+    ctx.stroke();
+  });
+
+  /* Floating particles */
+  floaters.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.y < -5) { p.y = H + 5; p.x = Math.random() * W; }
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${p.col},${p.alpha})`;
+    ctx.fill();
+  });
+
+  /* Cursor canvas glow */
+  if (mouse.x > 0) {
+    const mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 130);
+    mg.addColorStop(0, 'rgba(212,168,67,0.06)');
+    mg.addColorStop(1, 'rgba(212,168,67,0)');
+    ctx.fillStyle = mg;
+    ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 130, 0, Math.PI * 2); ctx.fill();
+  }
+
+  requestAnimationFrame(bgLoop);
+}
+bgLoop();
+
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+/* ── Mobile nav close on link click ── */
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+});
+</script>
+
+</body>
+</html>
