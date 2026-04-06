@@ -67,7 +67,6 @@ a:hover { color: var(--gold-l); }
 #hero    { background: radial-gradient(ellipse 80% 70% at 65% 50%, rgba(212,168,67,0.08) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 15% 80%, rgba(184,146,46,0.05) 0%, transparent 60%) !important; }
 #about   { background: rgba(17,17,19,0.82) !important; }
 #projects { background: rgba(9,9,11,0.82) !important; }
-#certifications { background: rgba(17,17,19,0.82) !important; }
 #contact { background: rgba(9,9,11,0.88) !important; }
 
 /* ═══ NAVIGATION ═══ */
@@ -181,16 +180,51 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
 /* ═══ ABOUT ═══ */
 .about-text p { color: var(--grey); margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
 .about-text p strong { color: var(--white); font-weight: 600; }
-.stat-row { display: flex; gap: 2.5rem; margin-top: 2.2rem; flex-wrap: wrap; }
-.stat { text-align: center; }
+
+/* Two-column layout: certs left, stats+skills right */
+.about-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  margin-top: 2.5rem; align-items: start;
+}
+.about-col-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+}
+
+/* Left: Certification stack with logos */
+.cert-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+.cert-item {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 0.9rem 1.1rem;
+  display: flex; align-items: center; gap: 1rem;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.cert-item:hover { border-color: var(--gold); background: rgba(212,168,67,0.06); transform: translateX(4px); }
+.cert-item-logo {
+  width: 42px; height: 42px; border-radius: 10px;
+  object-fit: contain; flex-shrink: 0;
+  background: rgba(255,255,255,0.06); padding: 4px;
+}
+.cert-item-info { flex: 1; min-width: 0; }
+.cert-item-name { font-weight: 600; color: var(--white); font-size: 0.88rem; line-height: 1.3; }
+.cert-item-meta { font-size: 0.73rem; color: var(--grey); margin-top: 2px; }
+
+/* Right: Stats + Skills */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.stat {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.2rem 1rem; text-align: center;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.stat:hover { border-color: var(--gold); transform: translateY(-3px); }
 .stat-num {
-  font-family: var(--font-display); font-size: 2.3rem; font-weight: 800;
+  font-family: var(--font-display); font-size: 2.2rem; font-weight: 800;
   background: linear-gradient(135deg, var(--gold), var(--gold-l));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   line-height: 1;
 }
-.stat-desc { font-size: 0.78rem; color: var(--grey); margin-top: 5px; font-weight: 500; }
-.skills-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.75rem; }
+.stat-desc { font-size: 0.75rem; color: var(--grey); margin-top: 6px; font-weight: 500; }
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
 .skill-tag {
   background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
   color: var(--grey-l); padding: 5px 13px; border-radius: 99px;
@@ -300,7 +334,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
   .hero-photo-wrap { justify-content: center; }
   .photo-frame { width: 200px; }
   .photo-accent { width: 200px; }
-  .stat-row { justify-content: center; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .about-split { grid-template-columns: 1fr; gap: 2.5rem; }
   .skills-list { justify-content: center; }
   .projects-grid { grid-template-columns: 1fr; }
   .certs-grid { grid-template-columns: 1fr; }
@@ -326,8 +361,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
   </button>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#about">Certifications</a></li>
     <li><a href="#projects">Projects</a></li>
-    <li><a href="#certifications">Certifications</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
@@ -375,31 +410,88 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
       <p>I'm a customer-focused retail leader with <strong>7+ years of experience</strong> in fast-paced, high-footfall environments. My journey spans managing a Sainsbury's store in Scotland — leading a team of 40, driving <strong>24% year-on-year sales growth</strong>, and generating <strong>£945K+ monthly revenue</strong> — to executing trade marketing across <strong>1,000+ outlets</strong> at ITC Limited in India.</p>
       <p>Today, I combine that frontline business understanding with a <strong>Microsoft PL-300 certification</strong> and strong technical skills in Power BI, SQL, and Python to build dashboards and analytics solutions that don't just look good — they solve real problems and drive action.</p>
     </div>
-    <div class="stat-row reveal reveal-d2">
-      <div class="stat"><div class="stat-num">7+</div><div class="stat-desc">Years in Retail & Analytics</div></div>
-      <div class="stat"><div class="stat-num">24%</div><div class="stat-desc">YoY Sales Growth</div></div>
-      <div class="stat"><div class="stat-num">1000+</div><div class="stat-desc">Outlets Managed</div></div>
-      <div class="stat"><div class="stat-num">£945K</div><div class="stat-desc">Monthly Revenue Led</div></div>
-    </div>
-    <div class="skills-list reveal reveal-d3">
-      <span class="skill-tag">Power BI</span>
-      <span class="skill-tag">DAX</span>
-      <span class="skill-tag">Power Query</span>
-      <span class="skill-tag">SQL</span>
-      <span class="skill-tag">PostgreSQL</span>
-      <span class="skill-tag">Python</span>
-      <span class="skill-tag">Pandas</span>
-      <span class="skill-tag">NumPy</span>
-      <span class="skill-tag">Matplotlib</span>
-      <span class="skill-tag">Seaborn</span>
-      <span class="skill-tag">scikit-learn</span>
-      <span class="skill-tag">Excel</span>
-      <span class="skill-tag">IBM Cognos</span>
-      <span class="skill-tag">Looker Studio</span>
-      <span class="skill-tag">Google Analytics 4</span>
-      <span class="skill-tag">Retail Analytics</span>
-      <span class="skill-tag">FMCG</span>
-      <span class="skill-tag">Trade Marketing</span>
+
+    <div class="about-split">
+
+      <!-- LEFT COLUMN: Certifications with logos -->
+      <div class="reveal reveal-d2">
+        <p class="about-col-label">Certifications & Credentials</p>
+        <div class="cert-stack">
+
+          <div class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image04.png?v=4056f968" alt="Microsoft" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">PL-300 Microsoft Data Analyst</div>
+              <div class="cert-item-meta">Microsoft · Sep 2025</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image18.png?v=4056f968" alt="IBM" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">IBM Data Analyst Professional</div>
+              <div class="cert-item-meta">Coursera / IBM · Jun 2025</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image07.png?v=4056f968" alt="DataCamp" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Associate Data Analyst in SQL</div>
+              <div class="cert-item-meta">DataCamp · Jul 2025</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image08.png?v=4056f968" alt="Google" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Google Analytics 4 Certification</div>
+              <div class="cert-item-meta">Google · Jul 2024</div>
+            </div>
+          </div>
+
+          <div class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image05.png?v=4056f968" alt="Excel" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Excel Essential Training</div>
+              <div class="cert-item-meta">LinkedIn Learning · Jun 2024</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Stats + Skills -->
+      <div class="reveal reveal-d3">
+        <p class="about-col-label">By the Numbers</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">7+</div><div class="stat-desc">Years in Retail & Analytics</div></div>
+          <div class="stat"><div class="stat-num">24%</div><div class="stat-desc">YoY Sales Growth</div></div>
+          <div class="stat"><div class="stat-num">1000+</div><div class="stat-desc">Outlets Managed</div></div>
+          <div class="stat"><div class="stat-num">£945K</div><div class="stat-desc">Monthly Revenue Led</div></div>
+        </div>
+        <div class="skills-list" style="margin-top:1.5rem;">
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">DAX</span>
+          <span class="skill-tag">Power Query</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">IBM Cognos</span>
+          <span class="skill-tag">Looker Studio</span>
+          <span class="skill-tag">Google Analytics 4</span>
+          <span class="skill-tag">Retail Analytics</span>
+          <span class="skill-tag">FMCG</span>
+          <span class="skill-tag">Trade Marketing</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -494,81 +586,6 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
 
 <div class="section-divider"></div>
 
-<!-- ═══ CERTIFICATIONS ═══ -->
-<section id="certifications">
-  <div class="section-inner">
-    <div class="reveal">
-      <p class="section-label">Here's a bundle of my verified credentials</p>
-      <h2 class="section-title">Certifications</h2>
-    </div>
-    <div class="certs-grid">
-
-      <div class="cert-card reveal reveal-d1">
-        <div class="cert-header">
-          <span class="cert-title">Power BI Data Analyst Associate (PL-300)</span>
-          <span class="cert-date">Sep 2025</span>
-        </div>
-        <div class="cert-issuer">Microsoft</div>
-        <div class="cert-skills">
-          <span class="cert-skill">Power BI</span><span class="cert-skill">DAX</span><span class="cert-skill">Data Modelling</span><span class="cert-skill">Power Query</span>
-        </div>
-        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
-      </div>
-
-      <div class="cert-card reveal reveal-d2">
-        <div class="cert-header">
-          <span class="cert-title">Associate Data Analyst in SQL</span>
-          <span class="cert-date">Jul 2025</span>
-        </div>
-        <div class="cert-issuer">DataCamp</div>
-        <div class="cert-skills">
-          <span class="cert-skill">SQL</span><span class="cert-skill">Data Analysis</span><span class="cert-skill">PostgreSQL</span>
-        </div>
-        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
-      </div>
-
-      <div class="cert-card reveal reveal-d3">
-        <div class="cert-header">
-          <span class="cert-title">IBM Data Analyst Professional Certificate</span>
-          <span class="cert-date">Jun 2025</span>
-        </div>
-        <div class="cert-issuer">Coursera / IBM</div>
-        <div class="cert-skills">
-          <span class="cert-skill">Data Analysis</span><span class="cert-skill">Python</span><span class="cert-skill">IBM Cognos</span><span class="cert-skill">Excel</span>
-        </div>
-        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
-      </div>
-
-      <div class="cert-card reveal reveal-d4">
-        <div class="cert-header">
-          <span class="cert-title">Google Analytics 4 Certification</span>
-          <span class="cert-date">Jul 2024</span>
-        </div>
-        <div class="cert-issuer">Google</div>
-        <div class="cert-skills">
-          <span class="cert-skill">Google Analytics</span><span class="cert-skill">Web Analytics</span><span class="cert-skill">GA4</span>
-        </div>
-        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
-      </div>
-
-      <div class="cert-card reveal reveal-d5">
-        <div class="cert-header">
-          <span class="cert-title">Excel Essential Training</span>
-          <span class="cert-date">Jun 2024</span>
-        </div>
-        <div class="cert-issuer">LinkedIn Learning</div>
-        <div class="cert-skills">
-          <span class="cert-skill">Excel</span><span class="cert-skill">PivotTables</span><span class="cert-skill">Dashboards</span>
-        </div>
-        <div class="cert-footer"><a href="#" target="_blank" class="cert-link">View credential ↗</a></div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
 <!-- ═══ CONTACT ═══ -->
 <section id="contact">
   <div class="section-inner">
@@ -622,7 +639,7 @@ function cursorLoop() {
 cursorLoop();
 
 /* Grow ring on hover over links/buttons */
-document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .skill-tag').forEach(el => {
+document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .cert-item, .skill-tag').forEach(el => {
   el.addEventListener('mouseenter', () => {
     ring.style.width = '52px'; ring.style.height = '52px';
     ring.style.borderColor = 'rgba(212,168,67,0.7)';
