@@ -237,26 +237,136 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
 .project-card {
   background: var(--card-bg); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.8rem;
-  border-left: 3px solid var(--gold-d);
+  border-top: 3px solid var(--gold-d);
   transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer; position: relative;
 }
-.project-card:nth-child(2n) { border-left-color: var(--gold); }
-.project-card:nth-child(3n) { border-left-color: var(--grey-d); }
+.project-card:nth-child(2n) { border-top-color: var(--gold); }
+.project-card:nth-child(3n) { border-top-color: var(--grey-d); }
 .project-card:hover { border-color: rgba(212,168,67,0.45); transform: translateY(-4px); box-shadow: var(--glow); }
-.project-emoji { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
-.project-title { font-family: var(--font-display); font-size: 1.15rem; color: var(--white); margin-bottom: 0.7rem; line-height: 1.3; }
-.project-desc { font-size: 0.9rem; color: var(--grey); line-height: 1.7; margin-bottom: 1.2rem; }
+.project-card-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.9rem; }
+.project-emoji { font-size: 2rem; flex-shrink: 0; }
+.project-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--white); line-height: 1.3; }
+.project-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.7; margin-bottom: 1.2rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
 .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
 .project-tag {
   background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
   color: var(--gold); font-size: 0.72rem; padding: 3px 10px; border-radius: 99px;
 }
-.project-links { display: flex; gap: 0.8rem; }
-.project-link {
-  font-size: 0.8rem; font-weight: 600; color: var(--gold);
-  transition: color 0.2s; text-decoration: none !important;
+.project-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 0.9rem; margin-top: auto; }
+.project-card-links { display: flex; gap: 0.8rem; }
+.project-card-links a {
+  font-size: 0.75rem; color: var(--grey); text-decoration: none !important;
+  display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;
 }
-.project-link:hover { color: var(--gold-l); }
+.project-card-links a:hover { color: var(--white); }
+.project-details-btn {
+  font-size: 0.8rem; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  background: none; border: none; cursor: pointer; font-family: var(--font-body);
+  display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;
+}
+.project-details-btn:hover { color: var(--gold-l); }
+
+/* Project Modal */
+.proj-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+  align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+}
+.proj-modal-overlay.open { display: flex; }
+.proj-modal {
+  background: var(--deep); border: 1px solid var(--border);
+  border-radius: 20px; width: 100%; max-width: 960px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,168,67,0.08);
+  position: relative; overflow: hidden;
+}
+.proj-modal-header {
+  padding: 2.5rem 2.5rem 2rem;
+  background: linear-gradient(180deg, rgba(212,168,67,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.proj-modal-emoji { font-size: 3rem; }
+.proj-modal-title-wrap { flex: 1; }
+.proj-modal-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); margin-bottom: 0.4rem; }
+.proj-modal-cat {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 99px;
+}
+.proj-modal-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  color: var(--grey-l); font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.proj-modal-close:hover { background: rgba(212,168,67,0.15); border-color: var(--gold); color: var(--white); }
+
+.proj-modal-body { padding: 2rem 2.5rem 2.5rem; }
+.proj-modal-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.proj-modal-about { font-size: 0.95rem; color: var(--grey); line-height: 1.85; margin-bottom: 2.2rem; }
+
+/* Key features 2-column grid */
+.proj-features {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem;
+  margin-bottom: 2.2rem;
+}
+.proj-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.85rem 1rem;
+  font-size: 0.85rem; color: var(--grey-l); line-height: 1.5;
+}
+.proj-feature::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+}
+
+/* Tech stack */
+.proj-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.proj-tech-tag {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--grey-l); font-size: 0.78rem; font-weight: 500;
+  padding: 6px 14px; border-radius: 99px;
+}
+
+/* Modal buttons */
+.proj-modal-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.proj-modal-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: var(--radius);
+  font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none !important; font-family: var(--font-body); transition: all 0.22s;
+}
+.proj-modal-btn.primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black);
+}
+.proj-modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212,168,67,0.35); color: var(--black); }
+.proj-modal-btn.ghost {
+  background: rgba(255,255,255,0.04); border: 1.5px solid var(--border);
+  color: var(--grey-l);
+}
+.proj-modal-btn.ghost:hover { border-color: var(--gold); color: var(--white); transform: translateY(-2px); }
+
+@media (max-width: 768px) {
+  .proj-features { grid-template-columns: 1fr; }
+  .proj-modal-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem 1.5rem; }
+  .proj-modal-body { padding: 1.5rem; }
+  .proj-modal-btns { flex-direction: column; }
+  .proj-modal-btn { justify-content: center; }
+}
 
 /* ═══ CERTIFICATIONS ═══ */
 .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
@@ -388,7 +498,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
     <div class="hero-photo-wrap">
       <div class="photo-tilt">
         <div class="photo-frame">
-          <img src="Rosssss.jpeg" alt="Rosewal Almeida">
+          <img src="Rosssss.jpg" alt="Rosewal Almeida">
         </div>
         <div class="photo-accent"></div>
         <div class="photo-glow"></div>
@@ -507,82 +617,105 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
     </div>
     <div class="projects-grid">
 
-      <div class="project-card reveal reveal-d1">
-        <span class="project-emoji">📊</span>
-        <h3 class="project-title">Blinkit Sales Analysis Dashboard</h3>
-        <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations. Used advanced SQL for aggregation and DAX measures to build an executive-ready dashboard for decision-making.</p>
-        <div class="project-tags">
-          <span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span>
-        </div>
-        <div class="project-links">
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" class="project-link">Live Dashboard ↗</a>
-          <a href="https://github.com/roswel0710/Blinkit-Project/blob/main/README.md" target="_blank" class="project-link">GitHub ↗</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal reveal-d2">
-        <span class="project-emoji">🌿</span>
-        <h3 class="project-title">Plant Co. Performance Report</h3>
-        <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity. Implemented Switch Measures in DAX for instant metric toggling and highlighted underperforming accounts with variance analysis.</p>
-        <div class="project-tags">
-          <span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span>
-        </div>
-        <div class="project-links">
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda" target="_blank" class="project-link">Live Dashboard ↗</a>
+      <div class="project-card reveal reveal-d1" onclick="openProject(0)">
+        <div class="project-card-head"><span class="project-emoji">📊</span><h3 class="project-title">Blinkit Sales Analysis Dashboard</h3></div>
+        <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations for executive decision-making.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Blinkit-Project/blob/main/README.md" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d3">
-        <span class="project-emoji">🛒</span>
-        <h3 class="project-title">Retail Loyalty Program Analytics</h3>
-        <p class="project-desc">Designed advanced SQL queries on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention. Calculated CLV, churn rate, and repeat purchase rates with Python visualisations.</p>
-        <div class="project-tags">
-          <span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/roswel0710/Retail-Loyalty.git" target="_blank" class="project-link">GitHub ↗</a>
-        </div>
-      </div>
-
-      <div class="project-card reveal reveal-d4">
-        <span class="project-emoji">🔍</span>
-        <h3 class="project-title">Advanced SQL Data Analytics</h3>
-        <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation. Used window functions, CTEs, and analytical views for business-ready reports.</p>
-        <div class="project-tags">
-          <span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/roswel0710/SQL-Data-Analytics-Project.git" target="_blank" class="project-link">GitHub ↗</a>
+      <div class="project-card reveal reveal-d2" onclick="openProject(1)">
+        <div class="project-card-head"><span class="project-emoji">🌿</span><h3 class="project-title">Plant Co. Performance Report</h3></div>
+        <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity with instant metric toggling.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d5">
-        <span class="project-emoji">🎓</span>
-        <h3 class="project-title">Developer Survey Capstone</h3>
-        <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey. Used Python, SQL, and Looker Studio for advanced visualisations.</p>
-        <div class="project-tags">
-          <span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/roswel0710/CapstoneProject.git" target="_blank" class="project-link">GitHub ↗</a>
+      <div class="project-card reveal reveal-d3" onclick="openProject(2)">
+        <div class="project-card-head"><span class="project-emoji">🛒</span><h3 class="project-title">Retail Loyalty Program Analytics</h3></div>
+        <p class="project-desc">Advanced SQL on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention with Python visualisations.</p>
+        <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Retail-Loyalty.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d6">
-        <span class="project-emoji">📚</span>
-        <h3 class="project-title">Library Database Management</h3>
-        <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance. Used stored procedures, triggers, and advanced SQL for operational reporting.</p>
-        <div class="project-tags">
-          <span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span>
+      <div class="project-card reveal reveal-d4" onclick="openProject(3)">
+        <div class="project-card-head"><span class="project-emoji">🔍</span><h3 class="project-title">Advanced SQL Data Analytics</h3></div>
+        <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation for business-ready reports.</p>
+        <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/SQL-Data-Analytics-Project.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
         </div>
-        <div class="project-links">
-          <a href="https://github.com/roswel0710/Library-Database-Management.git" target="_blank" class="project-link">GitHub ↗</a>
+      </div>
+
+      <div class="project-card reveal reveal-d5" onclick="openProject(4)">
+        <div class="project-card-head"><span class="project-emoji">🎓</span><h3 class="project-title">Developer Survey Capstone</h3></div>
+        <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey.</p>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/CapstoneProject.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d6" onclick="openProject(5)">
+        <div class="project-card-head"><span class="project-emoji">📚</span><h3 class="project-title">Library Database Management</h3></div>
+        <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance tracking.</p>
+        <div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Library-Database-Management.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
         </div>
       </div>
 
     </div>
   </div>
 </section>
+
+<!-- Project Detail Modal -->
+<div class="proj-modal-overlay" id="projModal">
+  <div class="proj-modal">
+    <button class="proj-modal-close" onclick="closeProject()">✕</button>
+    <div class="proj-modal-header">
+      <span class="proj-modal-emoji" id="pmEmoji"></span>
+      <div class="proj-modal-title-wrap">
+        <h3 class="proj-modal-title" id="pmTitle"></h3>
+        <span class="proj-modal-cat" id="pmCat"></span>
+      </div>
+    </div>
+    <div class="proj-modal-body">
+      <p class="proj-modal-label">✦ About This Project</p>
+      <p class="proj-modal-about" id="pmAbout"></p>
+      <p class="proj-modal-label">⚡ Key Features</p>
+      <div class="proj-features" id="pmFeatures"></div>
+      <p class="proj-modal-label">&lt;/&gt; Tech Stack</p>
+      <div class="proj-tech-tags" id="pmTech"></div>
+      <div class="proj-modal-btns" id="pmBtns"></div>
+    </div>
+  </div>
+</div>
 
 <div class="section-divider"></div>
 
@@ -803,6 +936,128 @@ reveals.forEach(el => observer.observe(el));
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
 });
+
+/* ── Project Modal System ── */
+const projectData = [
+  {
+    emoji: '📊', title: 'Blinkit Sales Analysis Dashboard', cat: 'Power BI · Retail Analytics',
+    about: 'An interactive Power BI sales analytics dashboard built to analyse 8,500+ retail item records across multiple outlet formats and locations, uncovering clear insights into sales performance, product characteristics, and outlet-level trends. Using advanced SQL for aggregation and validation and DAX measures within Power BI, the dataset was structured to ensure consistent KPIs across filters and visuals, resulting in an executive-ready dashboard designed for interactive exploration and decision-making.',
+    features: [
+      '8,500+ retail records analysed across outlet types',
+      'Advanced SQL aggregation and data validation',
+      'DAX measures for consistent KPIs across filters',
+      'Interactive slicers for outlet format, size, and location',
+      'Sales performance by product characteristics',
+      'Executive-ready visual design for stakeholder presentations'
+    ],
+    tech: ['Power BI', 'DAX', 'SQL', 'Power Query', 'Data Modelling'],
+    code: 'https://github.com/roswel0710/Blinkit-Project/blob/main/README.md',
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9'
+  },
+  {
+    emoji: '🌿', title: 'Plant Co. Performance Report', cat: 'Power BI · Business Intelligence',
+    about: 'An interactive Power BI dashboard to compare Year-to-Date (YTD) and Prior Year-to-Date (PYTD) performance across key metrics — Sales, Gross Profit, and Quantity. Implemented advanced DAX Switch Measures for seamless metric toggling and designed visuals to highlight growth opportunities, performance gaps, and actionable insights for faster decision-making.',
+    features: [
+      'YTD vs PYTD comparison across Sales, Profit, and Quantity',
+      'DAX Switch Measures for instant metric toggling',
+      'Variance analysis with conditional formatting',
+      'Underperforming account identification',
+      'Segmentation visuals for targeted insights',
+      'Streamlined multi-KPI reporting in a single dynamic view'
+    ],
+    tech: ['Power BI', 'DAX', 'Power Query', 'Excel', 'Data Modelling'],
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda'
+  },
+  {
+    emoji: '🛒', title: 'Retail Loyalty Program Analytics', cat: 'SQL · Python · Analytics',
+    about: 'A data analytics project exploring how customer loyalty impacts purchasing behavior, retention, and churn across membership tiers, regions, and time using a multi-table retail dataset spanning 8 years of customer, transaction, and loyalty program activity. The complete workflow covers database creation and cleaning, exploratory analysis, relationship and impact analysis, and reporting with Python visualisations.',
+    features: [
+      'Multi-table PostgreSQL database with referential integrity',
+      'Data cleaning: duplicates, NULLs, invalid formats via SQL',
+      'Customer Lifetime Value (CLV) and churn rate analysis',
+      'Cohort-based retention and year-over-year trend analysis',
+      'Loyalty vs non-loyalty customer behaviour comparison',
+      'Matplotlib and Seaborn visual summaries in Jupyter'
+    ],
+    tech: ['PostgreSQL', 'Python', 'Pandas', 'Matplotlib', 'Seaborn', 'Jupyter Notebook'],
+    code: 'https://github.com/roswel0710/Retail-Loyalty.git'
+  },
+  {
+    emoji: '🔍', title: 'Advanced SQL Data Analytics', cat: 'SQL · Data Pipeline',
+    about: 'A comprehensive implementation of a retail data analytics pipeline using PostgreSQL. Covers everything from database schema creation and data loading to exploratory analysis, segmentation, and report building. The goal was to simulate real-world business intelligence and reporting scenarios using only SQL, including two analytical views for customer and product-level reporting.',
+    features: [
+      'Star schema design: one fact table, two dimension tables',
+      'Window functions: ROW_NUMBER, LAG, SUM OVER for trend analysis',
+      'Customer segments: VIP, Regular, New based on spend and history',
+      'Product classification: High Performer vs Low Performer',
+      'Time-series analysis: monthly and yearly sales trends',
+      'Business-ready views: report_customers and report_products'
+    ],
+    tech: ['PostgreSQL', 'SQL', 'CTEs', 'Window Functions', 'Data Modelling', 'Views'],
+    code: 'https://github.com/roswel0710/SQL-Data-Analytics-Project.git'
+  },
+  {
+    emoji: '🎓', title: 'Developer Survey Capstone', cat: 'Python · SQL · Visualisation',
+    about: 'A data-driven capstone project analysing insights from the Stack Overflow Developer Survey to explore how developer compensation, satisfaction, and tech preferences vary by age, role, and geography. Loaded survey data into Pandas and SQLite, cleaned and preprocessed data, ran SQL queries, and created advanced visualisations including pie, bar, stacked, scatter, and bubble charts styled with Google Looker Studio.',
+    features: [
+      'Compensation analysis across age groups, roles, and countries',
+      'Job satisfaction trends by experience and employment type',
+      'Most admired and desired programming languages identified',
+      'Collaboration tools and tech preferences by role and age',
+      'Advanced visualisations: scatter, bubble, stacked charts',
+      'Final report styled with Google Looker Studio'
+    ],
+    tech: ['Python', 'Pandas', 'SQL', 'SQLite', 'Matplotlib', 'Seaborn', 'Looker Studio'],
+    code: 'https://github.com/roswel0710/CapstoneProject.git'
+  },
+  {
+    emoji: '📚', title: 'Library Database Management', cat: 'SQL · Database Design',
+    about: 'A comprehensive SQL-based project modelling core operations of a library — book rentals, returns, stock management, and staff performance tracking. The database schema includes multiple interrelated tables (Books, Members, Employees, Branches, Issue_Status, Return_Status), normalised and linked through primary and foreign key constraints. Stored procedures and triggers automate workflows like issuing/returning books and updating stock.',
+    features: [
+      'Relational schema with normalised, interlinked tables',
+      'Stored procedures for automated book issue and return',
+      'Triggers for real-time stock availability updates',
+      'High-performing branch identification via analytics',
+      'Member engagement tracking and staff productivity metrics',
+      'Operational reporting with joins, aggregates, and CTEs'
+    ],
+    tech: ['SQL', 'DDL/DML', 'Stored Procedures', 'Triggers', 'Joins', 'Aggregate Functions'],
+    code: 'https://github.com/roswel0710/Library-Database-Management.git'
+  }
+];
+
+const modal = document.getElementById('projModal');
+
+function openProject(i) {
+  const p = projectData[i];
+  document.getElementById('pmEmoji').textContent = p.emoji;
+  document.getElementById('pmTitle').textContent = p.title;
+  document.getElementById('pmCat').textContent = p.cat;
+  document.getElementById('pmAbout').textContent = p.about;
+
+  const featEl = document.getElementById('pmFeatures');
+  featEl.innerHTML = p.features.map(f => `<div class="proj-feature">${f}</div>`).join('');
+
+  const techEl = document.getElementById('pmTech');
+  techEl.innerHTML = p.tech.map(t => `<span class="proj-tech-tag">${t}</span>`).join('');
+
+  const btnsEl = document.getElementById('pmBtns');
+  let btns = '';
+  if (p.code) btns += `<a href="${p.code}" target="_blank" class="proj-modal-btn ghost">⌨ View Code</a>`;
+  if (p.demo) btns += `<a href="${p.demo}" target="_blank" class="proj-modal-btn primary">↗ Live Demo</a>`;
+  btnsEl.innerHTML = btns;
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProject() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modal.addEventListener('click', e => { if (e.target === modal) closeProject(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
 </script>
 
 </body>
