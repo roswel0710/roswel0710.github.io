@@ -488,13 +488,82 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
   .certs-grid { grid-template-columns: 1fr; }
   .contact-btns { flex-direction: column; align-items: center; }
   #cursor-dot, #cursor-ring { display: none; }
+  #bg-canvas { display: none !important; }
+  .mobile-bg { display: block !important; }
+}
+
+/* Mobile CSS-only animated background — floating particles + dot grid */
+.mobile-bg {
+  display: none;
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  overflow: hidden;
+  background-image: radial-gradient(circle at 1px 1px, rgba(212,168,67,0.07) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+.mobile-bg .m-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  animation: mOrb 15s ease-in-out infinite alternate;
+}
+.mobile-bg .m-orb-1 {
+  width: 300px; height: 300px; top: 5%; right: -10%;
+  background: radial-gradient(circle, rgba(212,168,67,0.12), transparent 70%);
+}
+.mobile-bg .m-orb-2 {
+  width: 250px; height: 250px; bottom: 20%; left: -8%;
+  background: radial-gradient(circle, rgba(184,146,46,0.08), transparent 70%);
+  animation-delay: -5s;
+}
+.mobile-bg .m-orb-3 {
+  width: 200px; height: 200px; top: 45%; right: 15%;
+  background: radial-gradient(circle, rgba(232,199,106,0.06), transparent 70%);
+  animation-delay: -10s;
+}
+@keyframes mOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -30px) scale(1.15); }
+  100% { transform: translate(-15px, 15px) scale(0.9); }
+}
+
+/* Animated floating dots on mobile */
+.mobile-bg .m-particle {
+  position: absolute; border-radius: 50%;
+  background: rgba(212,168,67,0.25);
+  animation: mFloat linear infinite;
+}
+@keyframes mFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
 }
 </style>
 </head>
 <body>
 
-<!-- Canvas for interactive hex grid -->
+<!-- Canvas for interactive data network (desktop) -->
 <canvas id="bg-canvas"></canvas>
+
+<!-- Mobile background (CSS-only animated) -->
+<div class="mobile-bg">
+  <div class="m-orb m-orb-1"></div>
+  <div class="m-orb m-orb-2"></div>
+  <div class="m-orb m-orb-3"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:10%;bottom:-5%;animation-duration:12s;animation-delay:0s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:25%;bottom:-5%;animation-duration:16s;animation-delay:2s;"></div>
+  <div class="m-particle" style="width:4px;height:4px;left:40%;bottom:-5%;animation-duration:10s;animation-delay:4s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:55%;bottom:-5%;animation-duration:14s;animation-delay:1s;"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:70%;bottom:-5%;animation-duration:18s;animation-delay:3s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:85%;bottom:-5%;animation-duration:11s;animation-delay:5s;"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:15%;bottom:-5%;animation-duration:15s;animation-delay:7s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:48%;bottom:-5%;animation-duration:13s;animation-delay:6s;"></div>
+  <div class="m-particle" style="width:4px;height:4px;left:62%;bottom:-5%;animation-duration:17s;animation-delay:2s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:33%;bottom:-5%;animation-duration:12s;animation-delay:8s;"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:78%;bottom:-5%;animation-duration:14s;animation-delay:4s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:5%;bottom:-5%;animation-duration:19s;animation-delay:1s;"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:92%;bottom:-5%;animation-duration:11s;animation-delay:9s;"></div>
+  <div class="m-particle" style="width:2px;height:2px;left:20%;bottom:-5%;animation-duration:16s;animation-delay:3s;"></div>
+  <div class="m-particle" style="width:3px;height:3px;left:58%;bottom:-5%;animation-duration:13s;animation-delay:5s;"></div>
+</div>
 
 <!-- Custom cursor -->
 <div id="cursor-dot"></div>
@@ -670,17 +739,29 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
       <h2 class="section-title">Projects</h2>
     </div>
     <div class="project-filters reveal reveal-d1">
-      <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">6</span></button>
+      <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">7</span></button>
       <button class="filter-btn" data-filter="power-bi">Power BI <span class="filter-count">2</span></button>
       <button class="filter-btn" data-filter="sql">SQL <span class="filter-count">4</span></button>
-      <button class="filter-btn" data-filter="python">Python <span class="filter-count">2</span></button>
-      <button class="filter-btn" data-filter="data-science">Data Science <span class="filter-count">2</span></button>
+      <button class="filter-btn" data-filter="python">Python <span class="filter-count">3</span></button>
+      <button class="filter-btn" data-filter="data-science">Data Science <span class="filter-count">3</span></button>
       <button class="filter-btn" data-filter="data-analyst">Data Analyst <span class="filter-count">4</span></button>
     </div>
 
     <div class="projects-grid">
 
-      <div class="project-card reveal reveal-d1" data-tags="power-bi,sql,data-analyst" onclick="openProject(0)">
+      <div class="project-card reveal reveal-d1" data-tags="python,data-science" onclick="openProject(0)">
+        <div class="project-card-head"><span class="project-emoji">🏥</span><h3 class="project-title">Diabetes Prediction — ML Classification</h3></div>
+        <p class="project-desc">An end-to-end machine learning project predicting diabetes using Random Forest with GridSearchCV tuning, SHAP explainability, and model persistence.</p>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">scikit-learn</span><span class="project-tag">Random Forest</span><span class="project-tag">SHAP</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="#" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d2" data-tags="power-bi,sql,data-analyst" onclick="openProject(1)">
         <div class="project-card-head"><span class="project-emoji">📊</span><h3 class="project-title">Blinkit Sales Analysis Dashboard</h3></div>
         <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations for executive decision-making.</p>
         <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span></div>
@@ -693,7 +774,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d2" data-tags="power-bi,data-analyst" onclick="openProject(1)">
+      <div class="project-card reveal reveal-d2" data-tags="power-bi,data-analyst" onclick="openProject(2)">
         <div class="project-card-head"><span class="project-emoji">🌿</span><h3 class="project-title">Plant Co. Performance Report</h3></div>
         <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity with instant metric toggling.</p>
         <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span></div>
@@ -705,7 +786,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d3" data-tags="python,sql,data-science" onclick="openProject(2)">
+      <div class="project-card reveal reveal-d3" data-tags="python,sql,data-science" onclick="openProject(3)">
         <div class="project-card-head"><span class="project-emoji">🛒</span><h3 class="project-title">Retail Loyalty Program Analytics</h3></div>
         <p class="project-desc">Advanced SQL on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention with Python visualisations.</p>
         <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span></div>
@@ -717,7 +798,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d4" data-tags="sql,data-analyst" onclick="openProject(3)">
+      <div class="project-card reveal reveal-d4" data-tags="sql,data-analyst" onclick="openProject(4)">
         <div class="project-card-head"><span class="project-emoji">🔍</span><h3 class="project-title">Advanced SQL Data Analytics</h3></div>
         <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation for business-ready reports.</p>
         <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span></div>
@@ -729,7 +810,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d5" data-tags="python,sql,data-science" onclick="openProject(4)">
+      <div class="project-card reveal reveal-d5" data-tags="python,sql,data-science" onclick="openProject(5)">
         <div class="project-card-head"><span class="project-emoji">🎓</span><h3 class="project-title">Developer Survey Capstone</h3></div>
         <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey.</p>
         <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span></div>
@@ -741,7 +822,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d6" data-tags="sql,data-analyst" onclick="openProject(5)">
+      <div class="project-card reveal reveal-d6" data-tags="sql,data-analyst" onclick="openProject(6)">
         <div class="project-card-head"><span class="project-emoji">📚</span><h3 class="project-title">Library Database Management</h3></div>
         <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance tracking.</p>
         <div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span></div>
@@ -846,9 +927,10 @@ document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .
   });
 });
 
-/* ── Interactive Data Network Background ── */
+/* ── Interactive Data Network Background (desktop only) ── */
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = isMobile ? null : canvas.getContext('2d');
 let W, H, nodes = [];
 const mouse = { x: -999, y: -999 };
 document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
@@ -872,21 +954,28 @@ function initNodes() {
     });
   }
 }
-resizeBg();
-window.addEventListener('resize', resizeBg);
+if (!isMobile) {
+  resizeBg();
+  window.addEventListener('resize', resizeBg);
+} else {
+  nodes = [];
+}
 
 /* Auto pulses along edges */
-setInterval(() => {
-  if (nodes.length < 2) return;
-  const a = nodes[Math.floor(Math.random() * nodes.length)];
-  let best = null, bd = Infinity;
-  nodes.forEach(b => { if (b === a) return; const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 160 && d < bd) { best = b; bd = d; } });
-  if (best) pulses.push({ ax: a.x, ay: a.y, bx: best.x, by: best.y, t: 0, sp: 0.015 + Math.random() * 0.01 });
-}, 250);
+if (!isMobile) {
+  setInterval(() => {
+    if (nodes.length < 2) return;
+    const a = nodes[Math.floor(Math.random() * nodes.length)];
+    let best = null, bd = Infinity;
+    nodes.forEach(b => { if (b === a) return; const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 160 && d < bd) { best = b; bd = d; } });
+    if (best) pulses.push({ ax: a.x, ay: a.y, bx: best.x, by: best.y, t: 0, sp: 0.015 + Math.random() * 0.01 });
+  }, 250);
+}
 
-/* Click effect — particle burst + node blast */
+/* Click effect — particle burst + node blast (desktop only) */
 const clickFx = [];
-document.addEventListener('click', e => {
+if (!isMobile) {
+  document.addEventListener('click', e => {
   /* Spawn 10 golden sparks */
   for (let i = 0; i < 10; i++) {
     const ang = Math.random() * Math.PI * 2;
@@ -913,7 +1002,8 @@ document.addEventListener('click', e => {
   /* Send pulses to nearby nodes */
   let near = nodes.filter(n => Math.hypot(n.x - e.clientX, n.y - e.clientY) < 200).slice(0, 6);
   near.forEach(n => { pulses.push({ ax: e.clientX, ay: e.clientY, bx: n.x, by: n.y, t: 0, sp: 0.025 }); });
-});
+  });
+} /* end isMobile check for click */
 
 function bgLoop() {
   ctx.clearRect(0, 0, W, H);
@@ -1044,7 +1134,7 @@ function bgLoop() {
 
   requestAnimationFrame(bgLoop);
 }
-bgLoop();
+if (!isMobile) bgLoop();
 
 /* ── Scroll Reveal ── */
 const reveals = document.querySelectorAll('.reveal');
@@ -1085,6 +1175,22 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 /* ── Project Modal System ── */
 const projectData = [
+  {
+    emoji: '🏥', title: 'Diabetes Prediction — ML Classification', cat: 'Machine Learning · Python',
+    about: 'An end-to-end machine learning classification project predicting diabetes onset using the Pima Indians Diabetes dataset. The full pipeline covers data cleaning (imputing zero values for Glucose, BloodPressure, and SkinThickness), exploratory data analysis with distribution plots, KDE plots, and correlation heatmaps, feature scaling with StandardScaler, and model building with both Logistic Regression and Random Forest classifiers. The Random Forest model was tuned using GridSearchCV with 5-fold cross-validation and class_weight="balanced" to handle class imbalance. SHAP (SHapley Additive exPlanations) was used to interpret feature importance and explain individual predictions. The final model and scaler were serialised with pickle for deployment.',
+    features: [
+      'Data cleaning: imputed zero values using mean/median strategies',
+      'EDA: histograms, KDE plots, correlation heatmaps with Seaborn',
+      'Feature scaling with StandardScaler for model consistency',
+      'Logistic Regression baseline with balanced class weights',
+      'Random Forest with GridSearchCV hyperparameter tuning (n_estimators, max_depth, min_samples_leaf)',
+      'SHAP TreeExplainer for model interpretability and feature importance',
+      'Model persistence with pickle for deployment readiness',
+      'Stratified train/test split to preserve class distribution'
+    ],
+    tech: ['Python', 'Pandas', 'NumPy', 'scikit-learn', 'Random Forest', 'Logistic Regression', 'GridSearchCV', 'SHAP', 'Matplotlib', 'Seaborn', 'Pickle'],
+    code: '#'
+  },
   {
     emoji: '📊', title: 'Blinkit Sales Analysis Dashboard', cat: 'Power BI · Retail Analytics',
     about: 'An interactive Power BI sales analytics dashboard built to analyse 8,500+ retail item records across multiple outlet formats and locations, uncovering clear insights into sales performance, product characteristics, and outlet-level trends. Using advanced SQL for aggregation and validation and DAX measures within Power BI, the dataset was structured to ensure consistent KPIs across filters and visuals, resulting in an executive-ready dashboard designed for interactive exploration and decision-making.',
