@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rosewal Almeida | Data Scientist & Analytics</title>
+
+<!-- ═══ CACHE BUSTING ═══ -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:    #09090b;
+  --deep:     #111113;
+  --charcoal: #1a1a1f;
+  --gold:     #d4a843;
+  --gold-l:   #e8c76a;
+  --gold-d:   #b8922e;
+  --amber:    #f59e0b;
+  --cream:    #faf0d7;
+  --white:    #f5f5f0;
+  --grey:     #9ca3af;
+  --grey-d:   #3f3f46;
+  --grey-l:   #d4d4d8;
+  --card-bg:  rgba(255,255,255,0.03);
+  --border:   rgba(212,168,67,0.15);
+  --border-h: rgba(212,168,67,0.4);
+  --radius:   14px;
+  --glow:     0 0 40px rgba(212,168,67,0.2);
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--gold-d) var(--black); }
+body { font-family: var(--font-body); background: var(--black); color: var(--white); line-height: 1.7; overflow-x: hidden; }
+::selection { background: var(--gold-d); color: var(--black); }
+a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+a:hover { color: var(--gold-l); }
+
+/* ═══ INTERACTIVE CANVAS BACKGROUND ═══ */
+#bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Custom cursor */
+#cursor-dot {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none; transform: translate(-50%,-50%);
+  mix-blend-mode: screen;
+  transition: transform 0.1s;
+}
+#cursor-ring {
+  position: fixed; top: 0; left: 0; z-index: 9998;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid rgba(212,168,67,0.45);
+  pointer-events: none; transform: translate(-50%,-50%);
+  transition: width 0.25s, height 0.25s, border-color 0.25s;
+}
+
+/* Section backgrounds */
+#hero    { background: radial-gradient(ellipse 80% 70% at 65% 50%, rgba(212,168,67,0.08) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 15% 80%, rgba(184,146,46,0.05) 0%, transparent 60%) !important; }
+#about   { background: rgba(17,17,19,0.45) !important; }
+#projects { background: rgba(9,9,11,0.45) !important; }
+#contact { background: rgba(9,9,11,0.5) !important; }
+
+/* ═══ NAVIGATION ═══ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(9,9,11,0.88);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 6%; height: 64px;
+}
+.nav-logo {
+  font-family: var(--font-display); font-weight: 800; font-size: 1.15rem;
+  background: linear-gradient(90deg, var(--gold), var(--gold-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--grey); letter-spacing: 0.03em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+.nav-toggle span { width: 24px; height: 2px; background: var(--grey); transition: all 0.3s; }
+
+/* ═══ SECTIONS ═══ */
+section { padding: 100px 6%; position: relative; z-index: 1; }
+.section-inner { max-width: 1120px; margin: 0 auto; }
+.section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.section-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 2.5rem;
+  background: linear-gradient(120deg, var(--white) 40%, var(--grey-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.25), transparent); margin: 0 6%; position: relative; z-index: 1; }
+
+/* ═══ HERO ═══ */
+#hero {
+  min-height: 100vh; display: flex; align-items: center; padding: 80px 6% 60px;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 400px;
+  gap: 5rem; align-items: center; max-width: 1120px; margin: 0 auto; width: 100%;
+}
+.hero-tagline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(212,168,67,0.1); border: 1px solid rgba(212,168,67,0.25);
+  color: var(--gold); font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 6px 16px; border-radius: 99px; margin-bottom: 1.4rem;
+}
+.hero-tagline::before {
+  content: ''; display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--gold);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.4; transform:scale(1.5); } }
+
+.hero-name {
+  font-family: var(--font-display); font-size: clamp(2.6rem, 5vw, 4.4rem);
+  font-weight: 800; line-height: 1.08; letter-spacing: -0.03em;
+  color: var(--white); margin-bottom: 1.1rem;
+}
+.grad {
+  background: linear-gradient(100deg, var(--gold), var(--gold-l), var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { font-size: 1.05rem; color: var(--grey); max-width: 500px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.8; }
+
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px;
+  border-radius: var(--radius); font-weight: 600; font-size: 0.9rem;
+  cursor: pointer; transition: all 0.22s; text-decoration: none !important; font-family: var(--font-body);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black); box-shadow: 0 4px 20px rgba(212,168,67,0.3);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,168,67,0.45); color: var(--black); }
+.btn-outline { background: transparent; border: 1.5px solid rgba(212,168,67,0.35); color: var(--grey-l); }
+.btn-outline:hover { border-color: var(--gold); color: var(--white); transform: translateY(-3px); }
+
+/* Hero photo */
+.hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+.photo-tilt { position: relative; transform: rotate(3deg); transition: transform 0.4s ease; }
+.photo-tilt:hover { transform: rotate(0deg) scale(1.02); }
+.photo-frame {
+  width: 240px; aspect-ratio: 3/4; border-radius: 24px;
+  overflow: hidden; border: 1px solid rgba(212,168,67,0.3);
+  box-shadow: 0 0 0 1px rgba(212,168,67,0.1), 0 30px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
+  position: relative;
+}
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.photo-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(212,168,67,0.15) 100%);
+  pointer-events: none;
+}
+.photo-accent {
+  position: absolute; width: 240px; aspect-ratio: 3/4;
+  border-radius: 24px; border: 1px solid rgba(212,168,67,0.2);
+  transform: rotate(7deg) translate(12px, 10px); z-index: -1;
+}
+.photo-glow {
+  position: absolute; width: 144px; height: 144px;
+  background: radial-gradient(circle, rgba(212,168,67,0.35), transparent 70%);
+  border-radius: 50%; bottom: -30px; right: -30px;
+  filter: blur(35px); z-index: -1;
+}
+
+/* ═══ ABOUT ═══ */
+.about-text p { color: var(--grey); margin-bottom: 1rem; font-size: 1rem; line-height: 1.8; }
+.about-text p strong { color: var(--white); font-weight: 600; }
+
+/* Two-column layout: certs left, stats+skills right */
+.about-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  margin-top: 2.5rem; align-items: start;
+}
+.about-col-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+}
+
+/* Left: Certification stack with logos */
+.cert-stack { display: flex; flex-direction: column; gap: 0.75rem; }
+.cert-item {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 0.9rem 1.1rem;
+  display: flex; align-items: center; gap: 1rem;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+  text-decoration: none !important; color: inherit; cursor: pointer;
+}
+.cert-item:hover { border-color: var(--gold); background: rgba(212,168,67,0.06); transform: translateX(4px); }
+.cert-item:hover .cert-arrow { opacity: 1; transform: translateX(0); }
+.cert-arrow {
+  color: var(--gold); font-size: 0.75rem; font-weight: 600;
+  opacity: 0; transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s; margin-left: 4px;
+}
+.cert-item-logo {
+  width: 42px; height: 42px; border-radius: 10px;
+  object-fit: contain; flex-shrink: 0;
+  background: rgba(255,255,255,0.06); padding: 4px;
+}
+.cert-item-info { flex: 1; min-width: 0; }
+.cert-item-name { font-weight: 600; color: var(--white); font-size: 0.88rem; line-height: 1.3; }
+.cert-item-meta { font-size: 0.73rem; color: var(--grey); margin-top: 2px; }
+
+/* Right: Stats + Skills */
+.stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.stat {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.2rem 1rem; text-align: center;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.stat:hover { border-color: var(--gold); transform: translateY(-3px); }
+.stat-num {
+  font-family: var(--font-display); font-size: 2.2rem; font-weight: 800;
+  background: linear-gradient(135deg, var(--gold), var(--gold-l));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1;
+}
+.stat-desc { font-size: 0.75rem; color: var(--grey); margin-top: 6px; font-weight: 500; }
+.skills-list { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1.5rem; }
+.skill-tag {
+  background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
+  color: var(--grey-l); padding: 5px 13px; border-radius: 99px;
+  font-size: 0.8rem; font-weight: 500; transition: all 0.2s;
+}
+.skill-tag:hover { background: rgba(212,168,67,0.18); color: var(--white); border-color: var(--gold); }
+
+/* ═══ PROJECTS ═══ */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+.project-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.8rem;
+  border-top: 3px solid var(--gold-d);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: pointer; position: relative;
+}
+.project-card:nth-child(2n) { border-top-color: var(--gold); }
+.project-card:nth-child(3n) { border-top-color: var(--grey-d); }
+.project-card:hover { border-color: rgba(212,168,67,0.45); transform: translateY(-4px); box-shadow: var(--glow); }
+.project-card-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.9rem; }
+.project-emoji { font-size: 2rem; flex-shrink: 0; }
+.project-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--white); line-height: 1.3; }
+.project-desc { font-size: 0.88rem; color: var(--grey); line-height: 1.7; margin-bottom: 1.2rem;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.project-tag {
+  background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2);
+  color: var(--gold); font-size: 0.72rem; padding: 3px 10px; border-radius: 99px;
+}
+.project-card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 0.9rem; margin-top: auto; }
+.project-card-links { display: flex; gap: 0.8rem; }
+.project-card-links a {
+  font-size: 0.75rem; color: var(--grey); text-decoration: none !important;
+  display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;
+}
+.project-card-links a:hover { color: var(--white); }
+.project-details-btn {
+  font-size: 0.8rem; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  background: none; border: none; cursor: pointer; font-family: var(--font-body);
+  display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;
+}
+.project-details-btn:hover { color: var(--gold-l); }
+
+/* Project Modal */
+.proj-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+  align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+}
+.proj-modal-overlay.open { display: flex; }
+.proj-modal {
+  background: var(--deep); border: 1px solid var(--border);
+  border-radius: 20px; width: 100%; max-width: 960px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(212,168,67,0.08);
+  position: relative; overflow: hidden;
+}
+.proj-modal-header {
+  padding: 2.5rem 2.5rem 2rem;
+  background: linear-gradient(180deg, rgba(212,168,67,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.proj-modal-emoji { font-size: 3rem; }
+.proj-modal-title-wrap { flex: 1; }
+.proj-modal-title { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); margin-bottom: 0.4rem; }
+.proj-modal-cat {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--grey); background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 99px;
+}
+.proj-modal-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+  color: var(--grey-l); font-size: 1.2rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.proj-modal-close:hover { background: rgba(212,168,67,0.15); border-color: var(--gold); color: var(--white); }
+
+.proj-modal-body { padding: 2rem 2.5rem 2.5rem; }
+.proj-modal-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.proj-modal-about { font-size: 0.95rem; color: var(--grey); line-height: 1.85; margin-bottom: 2.2rem; }
+
+/* Key features 2-column grid */
+.proj-features {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem;
+  margin-bottom: 2.2rem;
+}
+.proj-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+  border-radius: 10px; padding: 0.85rem 1rem;
+  font-size: 0.85rem; color: var(--grey-l); line-height: 1.5;
+}
+.proj-feature::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+}
+
+/* Tech stack */
+.proj-tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+.proj-tech-tag {
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--grey-l); font-size: 0.78rem; font-weight: 500;
+  padding: 6px 14px; border-radius: 99px;
+}
+
+/* Modal buttons */
+.proj-modal-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+.proj-modal-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; border-radius: var(--radius);
+  font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none !important; font-family: var(--font-body); transition: all 0.22s;
+}
+.proj-modal-btn.primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black);
+}
+.proj-modal-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212,168,67,0.35); color: var(--black); }
+.proj-modal-btn.ghost {
+  background: rgba(255,255,255,0.04); border: 1.5px solid var(--border);
+  color: var(--grey-l);
+}
+.proj-modal-btn.ghost:hover { border-color: var(--gold); color: var(--white); transform: translateY(-2px); }
+
+@media (max-width: 768px) {
+  .proj-features { grid-template-columns: 1fr; }
+  .proj-modal-header { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2rem 1.5rem 1.5rem; }
+  .proj-modal-body { padding: 1.5rem; }
+  .proj-modal-btns { flex-direction: column; }
+  .proj-modal-btn { justify-content: center; }
+}
+
+/* ═══ CERTIFICATIONS ═══ */
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; }
+.cert-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.25rem 1.4rem;
+  border-left: 3px solid var(--gold-d);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.cert-card:nth-child(2n) { border-left-color: var(--gold); }
+.cert-card:nth-child(3n) { border-left-color: var(--grey-d); }
+.cert-card:hover { border-color: rgba(212,168,67,0.45); transform: translateY(-3px); box-shadow: var(--glow); }
+.cert-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+.cert-title { font-family: var(--font-display); font-size: 0.95rem; color: var(--white); line-height: 1.4; }
+.cert-date {
+  font-size: 0.72rem; font-weight: 600; color: var(--gold);
+  background: rgba(212,168,67,0.1); padding: 3px 9px; border-radius: 99px;
+  border: 1px solid rgba(212,168,67,0.2); white-space: nowrap; flex-shrink: 0;
+}
+.cert-issuer { font-size: 0.82rem; color: var(--grey); margin-bottom: 0.75rem; }
+.cert-skills { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.85rem; }
+.cert-skill {
+  background: rgba(212,168,67,0.06); border: 1px solid rgba(212,168,67,0.15);
+  color: var(--grey-l); font-size: 0.7rem; padding: 2px 9px; border-radius: 99px;
+}
+.cert-footer { border-top: 1px solid rgba(212,168,67,0.1); padding-top: 0.7rem; display: flex; justify-content: flex-end; margin-top: auto; }
+.cert-link { font-size: 0.75rem; font-weight: 600; color: var(--gold); text-decoration: none !important; transition: color 0.2s; }
+.cert-link:hover { color: var(--gold-l); }
+
+/* ═══ CONTACT ═══ */
+#contact .section-inner { text-align: center; }
+.contact-sub { font-size: 1.05rem; color: var(--grey); max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.8; }
+.contact-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.btn-c {
+  display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+  border-radius: var(--radius); font-weight: 600; font-size: 0.88rem;
+  transition: all 0.22s; text-decoration: none !important; font-family: var(--font-body);
+}
+.btn-c-primary {
+  background: linear-gradient(135deg, var(--gold-d), var(--gold));
+  color: var(--black); box-shadow: 0 4px 20px rgba(212,168,67,0.25);
+}
+.btn-c-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(212,168,67,0.4); color: var(--black); }
+.btn-c-ghost { background: transparent; border: 1.5px solid rgba(212,168,67,0.3); color: var(--grey-l); }
+.btn-c-ghost:hover { border-color: var(--gold); color: var(--white); transform: translateY(-3px); }
+
+.footer-divider { border: none; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,168,67,0.2), transparent); margin: 2rem 0; }
+.footer-copy { font-size: 0.78rem; color: var(--grey-d); }
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
+.reveal-d6 { transition-delay: 0.6s; }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 768px) {
+  nav { padding: 0 4%; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; background: rgba(9,9,11,0.95);
+    backdrop-filter: blur(20px); padding: 1.5rem 4%; gap: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: flex; }
+  section { padding: 60px 5%; }
+  .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
+  .hero-btns { justify-content: center; }
+  .hero-photo-wrap { justify-content: center; }
+  .photo-frame { width: 200px; }
+  .photo-accent { width: 200px; }
+  .stat-row { grid-template-columns: 1fr 1fr; }
+  .about-split { grid-template-columns: 1fr; gap: 2.5rem; }
+  .skills-list { justify-content: center; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .contact-btns { flex-direction: column; align-items: center; }
+  #cursor-dot, #cursor-ring { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Canvas for interactive hex grid -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo">RA</div>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#about">Certifications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tagline">Data Science · Analytics · Retail · FMCG</div>
+      <h1 class="hero-name">Hey! I'm Rosewal —<br><span class="grad">Let's explore my journey...</span></h1>
+      <p class="hero-sub">A certified Data Scientist and Analyst with 7+ years of retail and FMCG experience. I combine machine learning, statistical modelling, and business intelligence to turn complex data into smarter decisions — using Python, SQL, Power BI, and scikit-learn.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          View My Work
+        </a>
+        <a href="#contact" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Let's Connect
+        </a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="photo-tilt">
+        <div class="photo-frame">
+          <img src="Rosssss.jpeg" alt="Rosewal Almeida">
+        </div>
+        <div class="photo-accent"></div>
+        <div class="photo-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">If you're wondering…</p>
+      <h2 class="section-title">Why Me?</h2>
+    </div>
+    <div class="about-text reveal reveal-d1">
+      <p>I'm a <strong>DataCamp-certified Associate Data Scientist</strong> and <strong>Microsoft-certified (PL-300) Data Analyst</strong> with <strong>7+ years of experience</strong> in fast-paced retail and FMCG environments. My journey spans managing a Sainsbury's store in Scotland — leading a team of 40, driving <strong>24% year-on-year sales growth</strong>, and generating <strong>£945K+ monthly revenue</strong> — to executing trade marketing across <strong>1,000+ outlets</strong> at ITC Limited in India.</p>
+      <p>Today, I combine that domain expertise with <strong>machine learning, statistical modelling, and data visualisation</strong> — building predictive models, customer segmentation pipelines, and interactive dashboards using Python, scikit-learn, SQL, and Power BI that don't just look good — they drive action.</p>
+    </div>
+
+    <div class="about-split">
+
+      <!-- LEFT COLUMN: Certifications with logos -->
+      <div class="reveal reveal-d2">
+        <p class="about-col-label">Certifications & Credentials</p>
+        <div class="cert-stack">
+
+          <a href="https://www.datacamp.com/certificate/DSA0015795301328" target="_blank" class="cert-item" style="border-color: var(--gold); background: rgba(212,168,67,0.04);">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image07.png?v=4056f968" alt="DataCamp" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Associate Data Scientist in Python <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">DataCamp · Apr 2026 · <span style="color:var(--gold);font-weight:600;">NEW</span></div>
+            </div>
+          </a>
+
+          <a href="https://learn.microsoft.com/en-us/credentials/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image04.png?v=4056f968" alt="Microsoft" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">PL-300 Microsoft Data Analyst <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">Microsoft · Sep 2025</div>
+            </div>
+          </a>
+
+          <a href="https://www.coursera.org/account/accomplishments/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image18.png?v=4056f968" alt="IBM" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">IBM Data Analyst Professional <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">Coursera / IBM · Jun 2025</div>
+            </div>
+          </a>
+
+          <a href="https://www.datacamp.com/certificate/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image07.png?v=4056f968" alt="DataCamp" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Associate Data Analyst in SQL <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">DataCamp · Jul 2025</div>
+            </div>
+          </a>
+
+          <a href="https://skillshop.credential.net/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image08.png?v=4056f968" alt="Google" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Google Analytics 4 Certification <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">Google · Jul 2024</div>
+            </div>
+          </a>
+
+          <a href="https://www.linkedin.com/learning/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image05.png?v=4056f968" alt="Excel" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Excel Essential Training <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">LinkedIn Learning · Jun 2024</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: Stats + Skills -->
+      <div class="reveal reveal-d3">
+        <p class="about-col-label">By the Numbers</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">7+</div><div class="stat-desc">Years in Retail & Analytics</div></div>
+          <div class="stat"><div class="stat-num">24%</div><div class="stat-desc">YoY Sales Growth</div></div>
+          <div class="stat"><div class="stat-num">1000+</div><div class="stat-desc">Outlets Managed</div></div>
+          <div class="stat"><div class="stat-num">£945K</div><div class="stat-desc">Monthly Revenue Led</div></div>
+        </div>
+        <div class="skills-list" style="margin-top:1.5rem;">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Seaborn</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Supervised Learning</span>
+          <span class="skill-tag">Unsupervised Learning</span>
+          <span class="skill-tag">Tree-Based Models</span>
+          <span class="skill-tag">Regression</span>
+          <span class="skill-tag">Classification</span>
+          <span class="skill-tag">Clustering</span>
+          <span class="skill-tag">PCA</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">DAX</span>
+          <span class="skill-tag">Power Query</span>
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Hypothesis Testing</span>
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">Looker Studio</span>
+          <span class="skill-tag">Google Analytics 4</span>
+          <span class="skill-tag">Retail Analytics</span>
+          <span class="skill-tag">FMCG</span>
+          <span class="skill-tag">Trade Marketing</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">I'll let my work do the talking…</p>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal reveal-d1" onclick="openProject(0)">
+        <div class="project-card-head"><span class="project-emoji">📊</span><h3 class="project-title">Blinkit Sales Analysis Dashboard</h3></div>
+        <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations for executive decision-making.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Blinkit-Project/blob/main/README.md" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d2" onclick="openProject(1)">
+        <div class="project-card-head"><span class="project-emoji">🌿</span><h3 class="project-title">Plant Co. Performance Report</h3></div>
+        <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity with instant metric toggling.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d3" onclick="openProject(2)">
+        <div class="project-card-head"><span class="project-emoji">🛒</span><h3 class="project-title">Retail Loyalty Program Analytics</h3></div>
+        <p class="project-desc">Advanced SQL on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention with Python visualisations.</p>
+        <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Retail-Loyalty.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d4" onclick="openProject(3)">
+        <div class="project-card-head"><span class="project-emoji">🔍</span><h3 class="project-title">Advanced SQL Data Analytics</h3></div>
+        <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation for business-ready reports.</p>
+        <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/SQL-Data-Analytics-Project.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d5" onclick="openProject(4)">
+        <div class="project-card-head"><span class="project-emoji">🎓</span><h3 class="project-title">Developer Survey Capstone</h3></div>
+        <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey.</p>
+        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/CapstoneProject.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-d6" onclick="openProject(5)">
+        <div class="project-card-head"><span class="project-emoji">📚</span><h3 class="project-title">Library Database Management</h3></div>
+        <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance tracking.</p>
+        <div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://github.com/roswel0710/Library-Database-Management.git" target="_blank" onclick="event.stopPropagation()">⌨ Code</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Project Detail Modal -->
+<div class="proj-modal-overlay" id="projModal">
+  <div class="proj-modal">
+    <button class="proj-modal-close" onclick="closeProject()">✕</button>
+    <div class="proj-modal-header">
+      <span class="proj-modal-emoji" id="pmEmoji"></span>
+      <div class="proj-modal-title-wrap">
+        <h3 class="proj-modal-title" id="pmTitle"></h3>
+        <span class="proj-modal-cat" id="pmCat"></span>
+      </div>
+    </div>
+    <div class="proj-modal-body">
+      <p class="proj-modal-label">✦ About This Project</p>
+      <p class="proj-modal-about" id="pmAbout"></p>
+      <p class="proj-modal-label">⚡ Key Features</p>
+      <div class="proj-features" id="pmFeatures"></div>
+      <p class="proj-modal-label">&lt;/&gt; Tech Stack</p>
+      <div class="proj-tech-tags" id="pmTech"></div>
+      <div class="proj-modal-btns" id="pmBtns"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="section-label">I'd love to hear from you…</p>
+      <h2 class="section-title">Let's Work Together</h2>
+    </div>
+    <p class="contact-sub reveal reveal-d1">Whether you're looking for a data analyst, want to collaborate on a project, or just want to talk analytics and retail — my inbox is always open.</p>
+    <div class="contact-btns reveal reveal-d2">
+      <a href="mailto:ros123almeida@gmail.com" class="btn-c btn-c-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Email Me
+      </a>
+      <a href="https://www.linkedin.com/in/rosewal-almeida/" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/roswel0710" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S9 17.44 9 18v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+        GitHub
+      </a>
+      <a href="https://drive.google.com/file/d/1cModsguA-c1R7PkuTbc52qonUXaZnzqE/view?usp=sharing" target="_blank" class="btn-c btn-c-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+    </div>
+    <hr class="footer-divider"/>
+    <p class="footer-copy">© 2026 Rosewal Almeida · Designed & Built with ♥</p>
+  </div>
+</section>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* ── Custom Cursor ── */
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+let mx = -100, my = -100, rx = -100, ry = -100;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+});
+
+function cursorLoop() {
+  rx += (mx - rx) * 0.15;
+  ry += (my - ry) * 0.15;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(cursorLoop);
+}
+cursorLoop();
+
+/* Grow ring on hover over links/buttons */
+document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .cert-item, .skill-tag').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    ring.style.width = '52px'; ring.style.height = '52px';
+    ring.style.borderColor = 'rgba(212,168,67,0.7)';
+  });
+  el.addEventListener('mouseleave', () => {
+    ring.style.width = '36px'; ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(212,168,67,0.45)';
+  });
+});
+
+/* ── Interactive Data Network Background ── */
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, nodes = [];
+const mouse = { x: -999, y: -999 };
+document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+function resizeBg() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; initNodes(); }
+
+const pulses = [];
+function initNodes() {
+  nodes = [];
+  /* Scale node count to screen area so it's always dense */
+  const area = W * H;
+  const count = Math.max(100, Math.floor(area / 10000));
+  for (let i = 0; i < count; i++) {
+    nodes.push({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      phase: Math.random() * Math.PI * 2,
+      sz: Math.random() * 3 + 1.2,
+      hub: Math.random() < 0.12
+    });
+  }
+}
+resizeBg();
+window.addEventListener('resize', resizeBg);
+
+/* Auto pulses along edges */
+setInterval(() => {
+  if (nodes.length < 2) return;
+  const a = nodes[Math.floor(Math.random() * nodes.length)];
+  let best = null, bd = Infinity;
+  nodes.forEach(b => { if (b === a) return; const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 160 && d < bd) { best = b; bd = d; } });
+  if (best) pulses.push({ ax: a.x, ay: a.y, bx: best.x, by: best.y, t: 0, sp: 0.015 + Math.random() * 0.01 });
+}, 250);
+
+/* Click effect — particle burst + node blast */
+const clickFx = [];
+document.addEventListener('click', e => {
+  /* Spawn 10 golden sparks */
+  for (let i = 0; i < 10; i++) {
+    const ang = Math.random() * Math.PI * 2;
+    const spd = 1.5 + Math.random() * 2.5;
+    clickFx.push({
+      type: 'spark', t: 0,
+      x: e.clientX, y: e.clientY,
+      vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd,
+      sz: Math.random() * 2 + 1
+    });
+  }
+  /* Center flash */
+  clickFx.push({ type: 'flash', t: 0, x: e.clientX, y: e.clientY });
+  /* Blast nearby nodes outward */
+  const blastR = 200;
+  nodes.forEach(n => {
+    const d = Math.hypot(n.x - e.clientX, n.y - e.clientY);
+    if (d < blastR && d > 0) {
+      const force = (1 - d / blastR) * 3;
+      n.vx += ((n.x - e.clientX) / d) * force;
+      n.vy += ((n.y - e.clientY) / d) * force;
+    }
+  });
+  /* Send pulses to nearby nodes */
+  let near = nodes.filter(n => Math.hypot(n.x - e.clientX, n.y - e.clientY) < 200).slice(0, 6);
+  near.forEach(n => { pulses.push({ ax: e.clientX, ay: e.clientY, bx: n.x, by: n.y, t: 0, sp: 0.025 }); });
+});
+
+function bgLoop() {
+  ctx.clearRect(0, 0, W, H);
+
+  /* Move nodes — gentle magnetic attraction toward cursor */
+  nodes.forEach(n => {
+    n.phase += 0.008;
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < 0 || n.x > W) n.vx *= -1;
+    if (n.y < 0 || n.y > H) n.vy *= -1;
+    n.x = Math.max(0, Math.min(W, n.x));
+    n.y = Math.max(0, Math.min(H, n.y));
+
+    /* Magnetic pull — nodes drift gently toward cursor */
+    const md = Math.hypot(mouse.x - n.x, mouse.y - n.y);
+    if (md < 220 && md > 30) {
+      const pull = (1 - md / 220) * 0.04;
+      n.vx += ((mouse.x - n.x) / md) * pull;
+      n.vy += ((mouse.y - n.y) / md) * pull;
+    }
+    /* Dampen so they don't accelerate forever */
+    n.vx *= 0.997;
+    n.vy *= 0.997;
+  });
+
+  /* Draw edges — thicker and brighter near cursor */
+  const CD = 160;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < CD) {
+        let alpha = (1 - d / CD) * 0.18;
+        const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+        const mDist = Math.hypot(mouse.x - midX, mouse.y - midY);
+        const mouseBoost = mDist < 200 ? (1 - mDist / 200) : 0;
+        alpha += mouseBoost * 0.25;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = mouseBoost > 0.15
+          ? `rgba(232,199,106,${Math.min(alpha, 0.5)})`
+          : `rgba(212,168,67,${Math.min(alpha, 0.4)})`;
+        ctx.lineWidth = mouseBoost > 0.15 ? 1.5 + mouseBoost : (alpha > 0.2 ? 1.2 : 0.8);
+        ctx.stroke();
+      }
+    }
+  }
+
+  /* Cursor connection beams — thin lines from cursor to nearest nodes */
+  if (mouse.x > 0) {
+    const sorted = nodes.map(n => ({ n, d: Math.hypot(mouse.x - n.x, mouse.y - n.y) }))
+      .filter(o => o.d < 200).sort((a, b) => a.d - b.d).slice(0, 5);
+    sorted.forEach(({ n, d }) => {
+      const alpha = (1 - d / 200) * 0.2;
+      ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(n.x, n.y);
+      ctx.strokeStyle = `rgba(232,199,106,${alpha})`;
+      ctx.lineWidth = 0.6; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+    });
+  }
+
+  /* Draw pulses */
+  for (let k = pulses.length - 1; k >= 0; k--) {
+    const p = pulses[k]; p.t += p.sp;
+    if (p.t > 1) { pulses.splice(k, 1); continue; }
+    const px = p.ax + (p.bx - p.ax) * p.t, py = p.ay + (p.by - p.ay) * p.t;
+    const g = ctx.createRadialGradient(px, py, 0, px, py, 5);
+    g.addColorStop(0, `rgba(232,199,106,${0.7 * (1 - p.t)})`);
+    g.addColorStop(1, 'rgba(232,199,106,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,240,200,${0.8 * (1 - p.t)})`; ctx.fill();
+  }
+
+  /* Draw nodes */
+  nodes.forEach(n => {
+    const md = Math.hypot(mouse.x - n.x, mouse.y - n.y);
+    const mi = md < 200 ? (1 - md / 200) : 0;
+    const pulse = Math.sin(n.phase) * 0.3 + 0.7;
+    let r = n.sz * pulse + mi * 1.5, alpha = 0.22 + mi * 0.65;
+    if (n.hub) { r = n.sz * 2 + mi * 4; alpha = 0.5 + mi * 0.5; }
+
+    if (mi > 0.15) {
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 6);
+      g.addColorStop(0, `rgba(212,168,67,${mi * 0.12})`);
+      g.addColorStop(1, 'rgba(212,168,67,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(n.x, n.y, r * 6, 0, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = n.hub ? `rgba(232,199,106,${alpha})` : `rgba(180,160,120,${alpha * 0.7})`;
+    ctx.fill();
+  });
+
+  /* Click effects — particle burst */
+  for (let k = clickFx.length - 1; k >= 0; k--) {
+    const f = clickFx[k];
+    f.t += 0.015;
+    if (f.t > 1) { clickFx.splice(k, 1); continue; }
+
+    if (f.type === 'spark') {
+      f.x += f.vx * (1 - f.t);
+      f.y += f.vy * (1 - f.t);
+      const al = 0.8 * (1 - f.t);
+      /* Glow around spark */
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.sz * 3 * (1 - f.t), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(212,168,67,${al * 0.15})`; ctx.fill();
+      /* Bright core */
+      ctx.beginPath(); ctx.arc(f.x, f.y, f.sz * (1 - f.t * 0.5), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(232,199,106,${al})`; ctx.fill();
+    } else if (f.type === 'flash') {
+      f.t += 0.025; /* flash fades faster */
+      const fa = (1 - f.t) * 0.4;
+      const fr = 25 * (1 - f.t);
+      if (fr > 0) {
+        ctx.beginPath(); ctx.arc(f.x, f.y, fr, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,240,200,${fa})`; ctx.fill();
+      }
+    }
+  }
+
+  /* Cursor glow */
+  if (mouse.x > 0) {
+    const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 150);
+    g.addColorStop(0, 'rgba(212,168,67,0.04)');
+    g.addColorStop(1, 'rgba(212,168,67,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 150, 0, Math.PI * 2); ctx.fill();
+  }
+
+  requestAnimationFrame(bgLoop);
+}
+bgLoop();
+
+/* ── Scroll Reveal ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+reveals.forEach(el => observer.observe(el));
+
+/* ── Mobile nav close on link click ── */
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
+});
+
+/* ── Project Modal System ── */
+const projectData = [
+  {
+    emoji: '📊', title: 'Blinkit Sales Analysis Dashboard', cat: 'Power BI · Retail Analytics',
+    about: 'An interactive Power BI sales analytics dashboard built to analyse 8,500+ retail item records across multiple outlet formats and locations, uncovering clear insights into sales performance, product characteristics, and outlet-level trends. Using advanced SQL for aggregation and validation and DAX measures within Power BI, the dataset was structured to ensure consistent KPIs across filters and visuals, resulting in an executive-ready dashboard designed for interactive exploration and decision-making.',
+    features: [
+      '8,500+ retail records analysed across outlet types',
+      'Advanced SQL aggregation and data validation',
+      'DAX measures for consistent KPIs across filters',
+      'Interactive slicers for outlet format, size, and location',
+      'Sales performance by product characteristics',
+      'Executive-ready visual design for stakeholder presentations'
+    ],
+    tech: ['Power BI', 'DAX', 'SQL', 'Power Query', 'Data Modelling'],
+    code: 'https://github.com/roswel0710/Blinkit-Project/blob/main/README.md',
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiMzY5ZDdkYTQtNjNlYi00ZDU0LTljOGYtZDRmMzk5YzYwMTU3IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9'
+  },
+  {
+    emoji: '🌿', title: 'Plant Co. Performance Report', cat: 'Power BI · Business Intelligence',
+    about: 'An interactive Power BI dashboard to compare Year-to-Date (YTD) and Prior Year-to-Date (PYTD) performance across key metrics — Sales, Gross Profit, and Quantity. Implemented advanced DAX Switch Measures for seamless metric toggling and designed visuals to highlight growth opportunities, performance gaps, and actionable insights for faster decision-making.',
+    features: [
+      'YTD vs PYTD comparison across Sales, Profit, and Quantity',
+      'DAX Switch Measures for instant metric toggling',
+      'Variance analysis with conditional formatting',
+      'Underperforming account identification',
+      'Segmentation visuals for targeted insights',
+      'Streamlined multi-KPI reporting in a single dynamic view'
+    ],
+    tech: ['Power BI', 'DAX', 'Power Query', 'Excel', 'Data Modelling'],
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiOTU1MDBmNjctMTU2OC00M2U0LTk5NmUtOWFlMWZjYzhkOTgxIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=d732bc39dbb48308feda'
+  },
+  {
+    emoji: '🛒', title: 'Retail Loyalty Program Analytics', cat: 'SQL · Python · Analytics',
+    about: 'A data analytics project exploring how customer loyalty impacts purchasing behavior, retention, and churn across membership tiers, regions, and time using a multi-table retail dataset spanning 8 years of customer, transaction, and loyalty program activity. The complete workflow covers database creation and cleaning, exploratory analysis, relationship and impact analysis, and reporting with Python visualisations.',
+    features: [
+      'Multi-table PostgreSQL database with referential integrity',
+      'Data cleaning: duplicates, NULLs, invalid formats via SQL',
+      'Customer Lifetime Value (CLV) and churn rate analysis',
+      'Cohort-based retention and year-over-year trend analysis',
+      'Loyalty vs non-loyalty customer behaviour comparison',
+      'Matplotlib and Seaborn visual summaries in Jupyter'
+    ],
+    tech: ['PostgreSQL', 'Python', 'Pandas', 'Matplotlib', 'Seaborn', 'Jupyter Notebook'],
+    code: 'https://github.com/roswel0710/Retail-Loyalty.git'
+  },
+  {
+    emoji: '🔍', title: 'Advanced SQL Data Analytics', cat: 'SQL · Data Pipeline',
+    about: 'A comprehensive implementation of a retail data analytics pipeline using PostgreSQL. Covers everything from database schema creation and data loading to exploratory analysis, segmentation, and report building. The goal was to simulate real-world business intelligence and reporting scenarios using only SQL, including two analytical views for customer and product-level reporting.',
+    features: [
+      'Star schema design: one fact table, two dimension tables',
+      'Window functions: ROW_NUMBER, LAG, SUM OVER for trend analysis',
+      'Customer segments: VIP, Regular, New based on spend and history',
+      'Product classification: High Performer vs Low Performer',
+      'Time-series analysis: monthly and yearly sales trends',
+      'Business-ready views: report_customers and report_products'
+    ],
+    tech: ['PostgreSQL', 'SQL', 'CTEs', 'Window Functions', 'Data Modelling', 'Views'],
+    code: 'https://github.com/roswel0710/SQL-Data-Analytics-Project.git'
+  },
+  {
+    emoji: '🎓', title: 'Developer Survey Capstone', cat: 'Python · SQL · Visualisation',
+    about: 'A data-driven capstone project analysing insights from the Stack Overflow Developer Survey to explore how developer compensation, satisfaction, and tech preferences vary by age, role, and geography. Loaded survey data into Pandas and SQLite, cleaned and preprocessed data, ran SQL queries, and created advanced visualisations including pie, bar, stacked, scatter, and bubble charts styled with Google Looker Studio.',
+    features: [
+      'Compensation analysis across age groups, roles, and countries',
+      'Job satisfaction trends by experience and employment type',
+      'Most admired and desired programming languages identified',
+      'Collaboration tools and tech preferences by role and age',
+      'Advanced visualisations: scatter, bubble, stacked charts',
+      'Final report styled with Google Looker Studio'
+    ],
+    tech: ['Python', 'Pandas', 'SQL', 'SQLite', 'Matplotlib', 'Seaborn', 'Looker Studio'],
+    code: 'https://github.com/roswel0710/CapstoneProject.git'
+  },
+  {
+    emoji: '📚', title: 'Library Database Management', cat: 'SQL · Database Design',
+    about: 'A comprehensive SQL-based project modelling core operations of a library — book rentals, returns, stock management, and staff performance tracking. The database schema includes multiple interrelated tables (Books, Members, Employees, Branches, Issue_Status, Return_Status), normalised and linked through primary and foreign key constraints. Stored procedures and triggers automate workflows like issuing/returning books and updating stock.',
+    features: [
+      'Relational schema with normalised, interlinked tables',
+      'Stored procedures for automated book issue and return',
+      'Triggers for real-time stock availability updates',
+      'High-performing branch identification via analytics',
+      'Member engagement tracking and staff productivity metrics',
+      'Operational reporting with joins, aggregates, and CTEs'
+    ],
+    tech: ['SQL', 'DDL/DML', 'Stored Procedures', 'Triggers', 'Joins', 'Aggregate Functions'],
+    code: 'https://github.com/roswel0710/Library-Database-Management.git'
+  }
+];
+
+const modal = document.getElementById('projModal');
+
+function openProject(i) {
+  const p = projectData[i];
+  document.getElementById('pmEmoji').textContent = p.emoji;
+  document.getElementById('pmTitle').textContent = p.title;
+  document.getElementById('pmCat').textContent = p.cat;
+  document.getElementById('pmAbout').textContent = p.about;
+
+  const featEl = document.getElementById('pmFeatures');
+  featEl.innerHTML = p.features.map(f => `<div class="proj-feature">${f}</div>`).join('');
+
+  const techEl = document.getElementById('pmTech');
+  techEl.innerHTML = p.tech.map(t => `<span class="proj-tech-tag">${t}</span>`).join('');
+
+  const btnsEl = document.getElementById('pmBtns');
+  let btns = '';
+  if (p.code) btns += `<a href="${p.code}" target="_blank" class="proj-modal-btn ghost">⌨ View Code</a>`;
+  if (p.demo) btns += `<a href="${p.demo}" target="_blank" class="proj-modal-btn primary">↗ Live Demo</a>`;
+  btnsEl.innerHTML = btns;
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProject() {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modal.addEventListener('click', e => { if (e.target === modal) closeProject(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
+</script>
+
+</body>
+</html>
