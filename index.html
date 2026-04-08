@@ -150,11 +150,11 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
 .btn-outline:hover { border-color: var(--gold); color: var(--white); transform: translateY(-3px); }
 
 /* Hero photo */
-.hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
+.hero-photo-wrap { position: relative; display: flex; justify-content: center; align-items: center; padding: 20px; }
 .photo-tilt { position: relative; transform: rotate(3deg); transition: transform 0.4s ease; }
 .photo-tilt:hover { transform: rotate(0deg) scale(1.02); }
 .photo-frame {
-  width: 240px; aspect-ratio: 3/4; border-radius: 24px;
+  width: 280px; aspect-ratio: 3/4; border-radius: 24px;
   overflow: hidden; border: 1px solid rgba(212,168,67,0.3);
   box-shadow: 0 0 0 1px rgba(212,168,67,0.1), 0 30px 60px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05);
   position: relative;
@@ -166,7 +166,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
   pointer-events: none;
 }
 .photo-accent {
-  position: absolute; width: 240px; aspect-ratio: 3/4;
+  position: absolute; width: 280px; aspect-ratio: 3/4;
   border-radius: 24px; border: 1px solid rgba(212,168,67,0.2);
   transform: rotate(7deg) translate(12px, 10px); z-index: -1;
 }
