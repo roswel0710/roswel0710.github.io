@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rosewal Almeida | Data & Retail Analytics</title>
+<title>Rosewal Almeida | Data Scientist & Analytics</title>
 
 <!-- ═══ CACHE BUSTING ═══ -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -198,8 +198,15 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
   border-radius: var(--radius); padding: 0.9rem 1.1rem;
   display: flex; align-items: center; gap: 1rem;
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
+  text-decoration: none !important; color: inherit; cursor: pointer;
 }
 .cert-item:hover { border-color: var(--gold); background: rgba(212,168,67,0.06); transform: translateX(4px); }
+.cert-item:hover .cert-arrow { opacity: 1; transform: translateX(0); }
+.cert-arrow {
+  color: var(--gold); font-size: 0.75rem; font-weight: 600;
+  opacity: 0; transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s; margin-left: 4px;
+}
 .cert-item-logo {
   width: 42px; height: 42px; border-radius: 10px;
   object-fit: contain; flex-shrink: 0;
@@ -481,9 +488,9 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
 <section id="hero">
   <div class="hero-grid">
     <div>
-      <div class="hero-tagline">Retail Analytics · Data · FMCG</div>
+      <div class="hero-tagline">Data Science · Analytics · Retail · FMCG</div>
       <h1 class="hero-name">Hey! I'm Rosewal —<br><span class="grad">Let's explore my journey...</span></h1>
-      <p class="hero-sub">A data enthusiast who dives deep into numbers, dashboards, and meaningful insights. Microsoft Certified (PL-300) Data Analyst with 7+ years of retail and FMCG experience — turning complex data into smarter business decisions using Power BI, SQL, and Python.</p>
+      <p class="hero-sub">A certified Data Scientist and Analyst with 7+ years of retail and FMCG experience. I combine machine learning, statistical modelling, and business intelligence to turn complex data into smarter decisions — using Python, SQL, Power BI, and scikit-learn.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
@@ -498,7 +505,7 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
     <div class="hero-photo-wrap">
       <div class="photo-tilt">
         <div class="photo-frame">
-          <img src="Rosssss.jpeg" alt="Rosewal Almeida">
+          <img src="Rosssss.jpg" alt="Rosewal Almeida">
         </div>
         <div class="photo-accent"></div>
         <div class="photo-glow"></div>
@@ -517,8 +524,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
       <h2 class="section-title">Why Me?</h2>
     </div>
     <div class="about-text reveal reveal-d1">
-      <p>I'm a customer-focused retail leader with <strong>7+ years of experience</strong> in fast-paced, high-footfall environments. My journey spans managing a Sainsbury's store in Scotland — leading a team of 40, driving <strong>24% year-on-year sales growth</strong>, and generating <strong>£945K+ monthly revenue</strong> — to executing trade marketing across <strong>1,000+ outlets</strong> at ITC Limited in India.</p>
-      <p>Today, I combine that frontline business understanding with a <strong>Microsoft PL-300 certification</strong> and strong technical skills in Power BI, SQL, and Python to build dashboards and analytics solutions that don't just look good — they solve real problems and drive action.</p>
+      <p>I'm a <strong>DataCamp-certified Associate Data Scientist</strong> and <strong>Microsoft-certified (PL-300) Data Analyst</strong> with <strong>7+ years of experience</strong> in fast-paced retail and FMCG environments. My journey spans managing a Sainsbury's store in Scotland — leading a team of 40, driving <strong>24% year-on-year sales growth</strong>, and generating <strong>£945K+ monthly revenue</strong> — to executing trade marketing across <strong>1,000+ outlets</strong> at ITC Limited in India.</p>
+      <p>Today, I combine that domain expertise with <strong>machine learning, statistical modelling, and data visualisation</strong> — building predictive models, customer segmentation pipelines, and interactive dashboards using Python, scikit-learn, SQL, and Power BI that don't just look good — they drive action.</p>
     </div>
 
     <div class="about-split">
@@ -528,45 +535,53 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         <p class="about-col-label">Certifications & Credentials</p>
         <div class="cert-stack">
 
-          <div class="cert-item">
-            <img src="https://rosewalalmeida.carrd.co/assets/images/image04.png?v=4056f968" alt="Microsoft" class="cert-item-logo">
-            <div class="cert-item-info">
-              <div class="cert-item-name">PL-300 Microsoft Data Analyst</div>
-              <div class="cert-item-meta">Microsoft · Sep 2025</div>
-            </div>
-          </div>
-
-          <div class="cert-item">
-            <img src="https://rosewalalmeida.carrd.co/assets/images/image18.png?v=4056f968" alt="IBM" class="cert-item-logo">
-            <div class="cert-item-info">
-              <div class="cert-item-name">IBM Data Analyst Professional</div>
-              <div class="cert-item-meta">Coursera / IBM · Jun 2025</div>
-            </div>
-          </div>
-
-          <div class="cert-item">
+          <a href="https://www.datacamp.com/certificate/DSA0015795301328" target="_blank" class="cert-item" style="border-color: var(--gold); background: rgba(212,168,67,0.04);">
             <img src="https://rosewalalmeida.carrd.co/assets/images/image07.png?v=4056f968" alt="DataCamp" class="cert-item-logo">
             <div class="cert-item-info">
-              <div class="cert-item-name">Associate Data Analyst in SQL</div>
+              <div class="cert-item-name">Associate Data Scientist in Python <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">DataCamp · Apr 2026 · <span style="color:var(--gold);font-weight:600;">NEW</span></div>
+            </div>
+          </a>
+
+          <a href="https://learn.microsoft.com/en-us/credentials/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image04.png?v=4056f968" alt="Microsoft" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">PL-300 Microsoft Data Analyst <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">Microsoft · Sep 2025</div>
+            </div>
+          </a>
+
+          <a href="https://www.coursera.org/account/accomplishments/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image18.png?v=4056f968" alt="IBM" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">IBM Data Analyst Professional <span class="cert-arrow">↗</span></div>
+              <div class="cert-item-meta">Coursera / IBM · Jun 2025</div>
+            </div>
+          </a>
+
+          <a href="https://www.datacamp.com/certificate/" target="_blank" class="cert-item">
+            <img src="https://rosewalalmeida.carrd.co/assets/images/image07.png?v=4056f968" alt="DataCamp" class="cert-item-logo">
+            <div class="cert-item-info">
+              <div class="cert-item-name">Associate Data Analyst in SQL <span class="cert-arrow">↗</span></div>
               <div class="cert-item-meta">DataCamp · Jul 2025</div>
             </div>
-          </div>
+          </a>
 
-          <div class="cert-item">
+          <a href="https://skillshop.credential.net/" target="_blank" class="cert-item">
             <img src="https://rosewalalmeida.carrd.co/assets/images/image08.png?v=4056f968" alt="Google" class="cert-item-logo">
             <div class="cert-item-info">
-              <div class="cert-item-name">Google Analytics 4 Certification</div>
+              <div class="cert-item-name">Google Analytics 4 Certification <span class="cert-arrow">↗</span></div>
               <div class="cert-item-meta">Google · Jul 2024</div>
             </div>
-          </div>
+          </a>
 
-          <div class="cert-item">
+          <a href="https://www.linkedin.com/learning/" target="_blank" class="cert-item">
             <img src="https://rosewalalmeida.carrd.co/assets/images/image05.png?v=4056f968" alt="Excel" class="cert-item-logo">
             <div class="cert-item-info">
-              <div class="cert-item-name">Excel Essential Training</div>
+              <div class="cert-item-name">Excel Essential Training <span class="cert-arrow">↗</span></div>
               <div class="cert-item-meta">LinkedIn Learning · Jun 2024</div>
             </div>
-          </div>
+          </a>
 
         </div>
       </div>
@@ -581,19 +596,28 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
           <div class="stat"><div class="stat-num">£945K</div><div class="stat-desc">Monthly Revenue Led</div></div>
         </div>
         <div class="skills-list" style="margin-top:1.5rem;">
-          <span class="skill-tag">Power BI</span>
-          <span class="skill-tag">DAX</span>
-          <span class="skill-tag">Power Query</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">PostgreSQL</span>
           <span class="skill-tag">Python</span>
+          <span class="skill-tag">scikit-learn</span>
           <span class="skill-tag">Pandas</span>
           <span class="skill-tag">NumPy</span>
           <span class="skill-tag">Matplotlib</span>
           <span class="skill-tag">Seaborn</span>
-          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Supervised Learning</span>
+          <span class="skill-tag">Unsupervised Learning</span>
+          <span class="skill-tag">Tree-Based Models</span>
+          <span class="skill-tag">Regression</span>
+          <span class="skill-tag">Classification</span>
+          <span class="skill-tag">Clustering</span>
+          <span class="skill-tag">PCA</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">DAX</span>
+          <span class="skill-tag">Power Query</span>
           <span class="skill-tag">Excel</span>
-          <span class="skill-tag">IBM Cognos</span>
+          <span class="skill-tag">Hypothesis Testing</span>
+          <span class="skill-tag">A/B Testing</span>
           <span class="skill-tag">Looker Studio</span>
           <span class="skill-tag">Google Analytics 4</span>
           <span class="skill-tag">Retail Analytics</span>
@@ -783,142 +807,118 @@ document.querySelectorAll('a, button, .btn, .btn-c, .project-card, .cert-card, .
   });
 });
 
-/* ── Interactive Hex Grid Background ── */
+/* ── Interactive Data Network Background ── */
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
-let W, H, hexes = [];
-const SIZE = 42;
+let W, H, nodes = [];
 const mouse = { x: -999, y: -999 };
-
 document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 
-function hexCorner(cx, cy, s, i) {
-  const angle = Math.PI / 180 * (60 * i - 30);
-  return { x: cx + s * Math.cos(angle), y: cy + s * Math.sin(angle) };
-}
+function resizeBg() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; initNodes(); }
 
-function buildGrid() {
-  hexes = [];
-  const w = SIZE * Math.sqrt(3);
-  const h = SIZE * 2;
-  const cols = Math.ceil(W / w) + 2;
-  const rows = Math.ceil(H / (h * 0.75)) + 2;
-  for (let row = -1; row < rows; row++) {
-    for (let col = -1; col < cols; col++) {
-      const cx = col * w + (row % 2 === 0 ? 0 : w / 2);
-      const cy = row * h * 0.75;
-      hexes.push({ cx, cy, phase: Math.random() * Math.PI * 2, speed: 0.006 + Math.random() * 0.008, baseAlpha: Math.random() * 0.06 + 0.03 });
-    }
+const pulses = [];
+function initNodes() {
+  nodes = [];
+  for (let i = 0; i < 70; i++) {
+    nodes.push({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+      phase: Math.random() * Math.PI * 2,
+      sz: Math.random() * 2 + 0.8,
+      hub: Math.random() < 0.12
+    });
   }
 }
+resizeBg();
+window.addEventListener('resize', resizeBg);
 
-function resizeBg() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-resizeBg(); buildGrid();
-window.addEventListener('resize', () => { resizeBg(); buildGrid(); });
+/* Auto pulses along edges */
+setInterval(() => {
+  if (nodes.length < 2) return;
+  const a = nodes[Math.floor(Math.random() * nodes.length)];
+  let best = null, bd = Infinity;
+  nodes.forEach(b => { if (b === a) return; const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 140 && d < bd) { best = b; bd = d; } });
+  if (best) pulses.push({ ax: a.x, ay: a.y, bx: best.x, by: best.y, t: 0, sp: 0.015 + Math.random() * 0.01 });
+}, 400);
 
-/* Auto ripples */
-const ripples = [];
-function spawnRipple(x, y) {
-  ripples.push({
-    x: x != null ? x : Math.random() * W,
-    y: y != null ? y : Math.random() * H,
-    r: 0,
-    maxR: 240 + Math.random() * 160,
-    speed: 2 + Math.random(),
-    color: Math.random() < 0.5 ? '212,168,67' : '184,146,46'
-  });
-}
-setInterval(() => spawnRipple(), 1600);
-spawnRipple(); spawnRipple(window.innerWidth * 0.5, window.innerHeight * 0.5);
-
-/* Click = ripple at cursor */
-document.addEventListener('click', () => spawnRipple(mouse.x, mouse.y));
-
-/* Floating particles */
-const floaters = Array.from({ length: 45 }, () => ({
-  x: Math.random() * window.innerWidth,
-  y: Math.random() * window.innerHeight,
-  vy: -(0.25 + Math.random() * 0.45),
-  vx: (Math.random() - 0.5) * 0.15,
-  alpha: Math.random() * 0.3 + 0.06,
-  size: Math.random() * 1.8 + 0.4,
-  col: Math.random() < 0.5 ? '212,168,67' : Math.random() < 0.5 ? '184,146,46' : '156,163,175',
-}));
-
-function drawHex(cx, cy, s) {
-  ctx.beginPath();
-  for (let i = 0; i < 6; i++) {
-    const p = hexCorner(cx, cy, s, i);
-    i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
-  }
-  ctx.closePath();
-}
+/* Click burst */
+document.addEventListener('click', () => {
+  let near = nodes.filter(n => Math.hypot(n.x - mouse.x, n.y - mouse.y) < 180).slice(0, 5);
+  near.forEach(n => { pulses.push({ ax: mouse.x, ay: mouse.y, bx: n.x, by: n.y, t: 0, sp: 0.03 }); });
+});
 
 function bgLoop() {
   ctx.clearRect(0, 0, W, H);
 
-  /* Update & cull ripples */
-  for (let k = ripples.length - 1; k >= 0; k--) {
-    ripples[k].r += ripples[k].speed;
-    if (ripples[k].r > ripples[k].maxR) ripples.splice(k, 1);
-  }
-
-  /* Hex cells */
-  hexes.forEach(h => {
-    h.phase += h.speed;
-    const pulseVal = Math.sin(h.phase) * 0.5 + 0.5;
-    const mdx = mouse.x - h.cx, mdy = mouse.y - h.cy;
-    const md = Math.sqrt(mdx * mdx + mdy * mdy);
-    const mouseInfluence = Math.max(0, 1 - md / 160);
-
-    let rippleInfluence = 0, rippleColor = '212,168,67';
-    ripples.forEach(rip => {
-      const rdx = rip.x - h.cx, rdy = rip.y - h.cy;
-      const rd = Math.sqrt(rdx * rdx + rdy * rdy);
-      const ring = Math.abs(rd - rip.r);
-      const inf = ring < 30 ? (1 - ring / 30) * (1 - rip.r / rip.maxR) : 0;
-      if (inf > rippleInfluence) { rippleInfluence = inf; rippleColor = rip.color; }
-    });
-
-    const alpha = h.baseAlpha + pulseVal * 0.05 + mouseInfluence * 0.35 + rippleInfluence * 0.45;
-    const strokeCol = mouseInfluence > 0.25
-      ? `rgba(232,199,106,${alpha})`
-      : rippleInfluence > 0.08
-        ? `rgba(${rippleColor},${alpha})`
-        : `rgba(212,168,67,${alpha})`;
-
-    if (mouseInfluence > 0.35 || rippleInfluence > 0.25) {
-      drawHex(h.cx, h.cy, SIZE - 1);
-      const fillA = mouseInfluence * 0.1 + rippleInfluence * 0.12;
-      const col = mouseInfluence > 0.35 ? '232,199,106' : rippleColor;
-      ctx.fillStyle = `rgba(${col},${fillA})`;
-      ctx.fill();
-    }
-
-    drawHex(h.cx, h.cy, SIZE - 1);
-    ctx.strokeStyle = strokeCol;
-    ctx.lineWidth = mouseInfluence > 0.5 ? 1.2 : 0.8;
-    ctx.stroke();
+  /* Move nodes — slow drift, NO repulsion from cursor */
+  nodes.forEach(n => {
+    n.phase += 0.008;
+    n.x += n.vx;
+    n.y += n.vy;
+    if (n.x < 0 || n.x > W) n.vx *= -1;
+    if (n.y < 0 || n.y > H) n.vy *= -1;
+    n.x = Math.max(0, Math.min(W, n.x));
+    n.y = Math.max(0, Math.min(H, n.y));
   });
 
-  /* Floating particles */
-  floaters.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.y < -5) { p.y = H + 5; p.x = Math.random() * W; }
-    if (p.x < 0 || p.x > W) p.vx *= -1;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${p.col},${p.alpha})`;
+  /* Draw edges */
+  const CD = 140;
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i], b = nodes[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < CD) {
+        let alpha = (1 - d / CD) * 0.12;
+        const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+        const mDist = Math.hypot(mouse.x - midX, mouse.y - midY);
+        if (mDist < 180) alpha += (1 - mDist / 180) * 0.2;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(212,168,67,${Math.min(alpha, 0.35)})`;
+        ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    }
+  }
+
+  /* Draw pulses */
+  for (let k = pulses.length - 1; k >= 0; k--) {
+    const p = pulses[k]; p.t += p.sp;
+    if (p.t > 1) { pulses.splice(k, 1); continue; }
+    const px = p.ax + (p.bx - p.ax) * p.t, py = p.ay + (p.by - p.ay) * p.t;
+    const g = ctx.createRadialGradient(px, py, 0, px, py, 5);
+    g.addColorStop(0, `rgba(232,199,106,${0.7 * (1 - p.t)})`);
+    g.addColorStop(1, 'rgba(232,199,106,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,240,200,${0.8 * (1 - p.t)})`; ctx.fill();
+  }
+
+  /* Draw nodes */
+  nodes.forEach(n => {
+    const md = Math.hypot(mouse.x - n.x, mouse.y - n.y);
+    const mi = md < 180 ? (1 - md / 180) : 0;
+    const pulse = Math.sin(n.phase) * 0.3 + 0.7;
+    let r = n.sz * pulse, alpha = 0.15 + mi * 0.6;
+    if (n.hub) { r = n.sz * 1.8 + mi * 2; alpha = 0.4 + mi * 0.5; }
+
+    if (mi > 0.2) {
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 5);
+      g.addColorStop(0, `rgba(212,168,67,${mi * 0.1})`);
+      g.addColorStop(1, 'rgba(212,168,67,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(n.x, n.y, r * 5, 0, Math.PI * 2); ctx.fill();
+    }
+
+    ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = n.hub ? `rgba(232,199,106,${alpha})` : `rgba(180,160,120,${alpha * 0.7})`;
     ctx.fill();
   });
 
-  /* Cursor canvas glow */
+  /* Cursor glow */
   if (mouse.x > 0) {
-    const mg = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 130);
-    mg.addColorStop(0, 'rgba(212,168,67,0.06)');
-    mg.addColorStop(1, 'rgba(212,168,67,0)');
-    ctx.fillStyle = mg;
-    ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 130, 0, Math.PI * 2); ctx.fill();
+    const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 150);
+    g.addColorStop(0, 'rgba(212,168,67,0.04)');
+    g.addColorStop(1, 'rgba(212,168,67,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 150, 0, Math.PI * 2); ctx.fill();
   }
 
   requestAnimationFrame(bgLoop);
