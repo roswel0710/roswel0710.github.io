@@ -72,23 +72,33 @@ a:hover { color: var(--gold-l); }
 /* ═══ NAVIGATION ═══ */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(9,9,11,0.92);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--border);
+  background: rgba(9,9,11,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212,168,67,0.25);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4), 0 1px 0 rgba(212,168,67,0.1);
   display: flex; justify-content: center; align-items: center;
   padding: 0 5%; height: 68px;
   gap: 3rem;
 }
 .nav-logo {
-  font-family: var(--font-display); font-weight: 800; font-size: 1.4rem;
+  font-family: var(--font-display); font-weight: 800; font-size: 1.5rem;
   background: linear-gradient(90deg, var(--gold), var(--gold-l));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
   position: absolute; left: 5%;
 }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-.nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--grey-l); letter-spacing: 0.04em; transition: color 0.2s; text-decoration: none !important; }
+.nav-links a {
+  font-size: 0.9rem; font-weight: 500; color: var(--grey-l); letter-spacing: 0.04em;
+  transition: color 0.2s; text-decoration: none !important; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-l));
+  transition: width 0.3s ease;
+}
 .nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { width: 100%; }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
 .nav-toggle span { width: 24px; height: 2px; background: var(--grey); transition: all 0.3s; }
 
@@ -645,11 +655,11 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
           View My Work
         </a>
-        <a href="javascript:void(0)" onclick="openResume()" class="btn btn-primary" style="background: linear-gradient(135deg, #b8922e, #e8c76a);">
+        <a href="javascript:void(0)" onclick="openResume()" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           View Resume
         </a>
-        <a href="#contact" class="btn btn-outline">
+        <a href="#contact" class="btn btn-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Let's Connect
         </a>
@@ -793,16 +803,17 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
       <h2 class="section-title">Projects</h2>
     </div>
     <div class="project-filters reveal reveal-d1">
-      <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">7</span></button>
-      <button class="filter-btn" data-filter="power-bi">Power BI <span class="filter-count">2</span></button>
-      <button class="filter-btn" data-filter="sql">SQL <span class="filter-count">4</span></button>
+      <button class="filter-btn active" data-filter="all">All Projects <span class="filter-count">10</span></button>
+      <button class="filter-btn" data-filter="power-bi">Power BI <span class="filter-count">5</span></button>
+      <button class="filter-btn" data-filter="sql">SQL <span class="filter-count">5</span></button>
       <button class="filter-btn" data-filter="python">Python <span class="filter-count">3</span></button>
       <button class="filter-btn" data-filter="data-science">Data Science <span class="filter-count">3</span></button>
-      <button class="filter-btn" data-filter="data-analyst">Data Analyst <span class="filter-count">4</span></button>
+      <button class="filter-btn" data-filter="data-analyst">Data Analyst <span class="filter-count">7</span></button>
     </div>
 
     <div class="projects-grid">
 
+      <!-- 0: Diabetes ML -->
       <div class="project-card reveal reveal-d1" data-tags="python,data-science" onclick="openProject(0)">
         <div class="project-card-head"><span class="project-emoji">🏥</span><h3 class="project-title">Diabetes Prediction — ML Classification</h3></div>
         <p class="project-desc">An end-to-end machine learning project predicting diabetes using Random Forest with GridSearchCV tuning, SHAP explainability, and model persistence.</p>
@@ -816,7 +827,47 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d2" data-tags="power-bi,sql,data-analyst" onclick="openProject(1)">
+      <!-- 1: Spotify -->
+      <div class="project-card reveal reveal-d1" data-tags="power-bi,data-analyst" onclick="openProject(1)">
+        <div class="project-card-head"><span class="project-emoji">🎵</span><h3 class="project-title">Spotify Music Analytics Dashboard</h3></div>
+        <p class="project-desc">A Power BI dashboard analysing Spotify performance across 2023–2024, uncovering listener trends, top artists, and song popularity to optimise promotion strategies.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Music Analytics</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiYjk0NjI3M2QtMTI1Yi00NzhlLWJkZjYtNTNiYmU2MDg2OGI4IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=6f17c5c2130b902c6a00" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <!-- 2: IPL -->
+      <div class="project-card reveal reveal-d2" data-tags="power-bi,sql,data-analyst" onclick="openProject(2)">
+        <div class="project-card-head"><span class="project-emoji">🏏</span><h3 class="project-title">IPL Analysis Dashboard (2008–2022)</h3></div>
+        <p class="project-desc">A Power BI dashboard covering every IPL season from 2008–2022. Connected to MS SQL Server & PostgreSQL, with advanced DAX and time intelligence.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL Server</span><span class="project-tag">PostgreSQL</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiODc5YmMxM2YtYmZmNS00ZWUyLTg3NmItYmI5ODI4Mjg3YTRhIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <!-- 3: Customer Shopping -->
+      <div class="project-card reveal reveal-d2" data-tags="power-bi,sql,data-analyst" onclick="openProject(3)">
+        <div class="project-card-head"><span class="project-emoji">🛍️</span><h3 class="project-title">Customer Shopping Behaviour Dashboard</h3></div>
+        <p class="project-desc">A Power BI dashboard built from 3,900 retail transactions across 50 locations, exploring customer shopping behaviour for loyalty, marketing, and subscription strategy.</p>
+        <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">SQL Server</span><span class="project-tag">Feature Engineering</span><span class="project-tag">Retail</span></div>
+        <div class="project-card-footer">
+          <div class="project-card-links">
+            <a href="https://app.powerbi.com/view?r=eyJrIjoiYjhiZDZlNjQtYmQ2Ni00OWRjLTljZmEtZTIwYTdhMzA0ZDE0IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9" target="_blank" onclick="event.stopPropagation()">↗ Demo</a>
+          </div>
+          <button class="project-details-btn">Details ›</button>
+        </div>
+      </div>
+
+      <!-- 4: Blinkit -->
+      <div class="project-card reveal reveal-d3" data-tags="power-bi,sql,data-analyst" onclick="openProject(4)">
         <div class="project-card-head"><span class="project-emoji">📊</span><h3 class="project-title">Blinkit Sales Analysis Dashboard</h3></div>
         <p class="project-desc">An interactive Power BI dashboard analysing 8,500+ retail item records across outlet formats and locations for executive decision-making.</p>
         <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">Retail</span></div>
@@ -829,7 +880,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d2" data-tags="power-bi,data-analyst" onclick="openProject(2)">
+      <!-- 5: Plant Co -->
+      <div class="project-card reveal reveal-d3" data-tags="power-bi,data-analyst" onclick="openProject(5)">
         <div class="project-card-head"><span class="project-emoji">🌿</span><h3 class="project-title">Plant Co. Performance Report</h3></div>
         <p class="project-desc">Built an interactive Power BI dashboard comparing YTD vs PYTD sales, gross profit, and quantity with instant metric toggling.</p>
         <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">Power Query</span><span class="project-tag">Excel</span></div>
@@ -841,7 +893,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d3" data-tags="python,sql,data-science" onclick="openProject(3)">
+      <!-- 6: Retail Loyalty -->
+      <div class="project-card reveal reveal-d4" data-tags="python,sql,data-science" onclick="openProject(6)">
         <div class="project-card-head"><span class="project-emoji">🛒</span><h3 class="project-title">Retail Loyalty Program Analytics</h3></div>
         <p class="project-desc">Advanced SQL on a multi-table retail dataset to extract purchase patterns, segment loyalty members, and track retention with Python visualisations.</p>
         <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">Python</span><span class="project-tag">Pandas</span><span class="project-tag">Seaborn</span></div>
@@ -853,7 +906,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d4" data-tags="sql,data-analyst" onclick="openProject(4)">
+      <!-- 7: Advanced SQL -->
+      <div class="project-card reveal reveal-d4" data-tags="sql,data-analyst" onclick="openProject(7)">
         <div class="project-card-head"><span class="project-emoji">🔍</span><h3 class="project-title">Advanced SQL Data Analytics</h3></div>
         <p class="project-desc">A complete data pipeline in PostgreSQL — database creation, EDA, KPI calculation, and customer/product segmentation for business-ready reports.</p>
         <div class="project-tags"><span class="project-tag">PostgreSQL</span><span class="project-tag">SQL</span><span class="project-tag">Data Pipeline</span><span class="project-tag">Segmentation</span></div>
@@ -865,7 +919,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d5" data-tags="python,sql,data-science" onclick="openProject(5)">
+      <!-- 8: Developer Survey -->
+      <div class="project-card reveal reveal-d5" data-tags="python,sql,data-science" onclick="openProject(8)">
         <div class="project-card-head"><span class="project-emoji">🎓</span><h3 class="project-title">Developer Survey Capstone</h3></div>
         <p class="project-desc">Explored how developer compensation, satisfaction, and tech preferences vary by age, role, and geography using the Stack Overflow Survey.</p>
         <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Looker Studio</span><span class="project-tag">EDA</span></div>
@@ -877,7 +932,8 @@ section { padding: 100px 6%; position: relative; z-index: 1; }
         </div>
       </div>
 
-      <div class="project-card reveal reveal-d6" data-tags="sql,data-analyst" onclick="openProject(6)">
+      <!-- 9: Library DB -->
+      <div class="project-card reveal reveal-d5" data-tags="sql,data-analyst" onclick="openProject(9)">
         <div class="project-card-head"><span class="project-emoji">📚</span><h3 class="project-title">Library Database Management</h3></div>
         <p class="project-desc">Designed a relational database for library operations — book rentals, returns, stock management, and staff performance tracking.</p>
         <div class="project-tags"><span class="project-tag">SQL</span><span class="project-tag">DDL/DML</span><span class="project-tag">Stored Procedures</span></div>
@@ -1263,6 +1319,48 @@ const projectData = [
     tech: ['Python', 'Pandas', 'NumPy', 'scikit-learn', 'Random Forest', 'Logistic Regression', 'GridSearchCV', 'SHAP', 'Matplotlib', 'Seaborn', 'Pickle'],
     code: '#',
     demo: 'https://diabetes-prediction-ml-123.streamlit.app/'
+  },
+  {
+    emoji: '🎵', title: 'Spotify Music Analytics Dashboard', cat: 'Power BI · Music Analytics',
+    about: 'A Power BI dashboard analysing Spotify performance across 2023\u20132024. It uncovers listener trends, top artists, and song popularity while solving key business problems like optimising artist promotion strategies, planning release formats and timing, understanding audience engagement patterns, and benchmarking against competitors. A strong example of how analytics can turn music data into actionable insights.',
+    features: [
+      'Listener trend analysis across 2023\u20132024 seasons',
+      'Top artists and song popularity rankings',
+      'Artist promotion strategy optimisation insights',
+      'Release format and timing recommendations',
+      'Audience engagement pattern analysis',
+      'Competitor benchmarking visuals'
+    ],
+    tech: ['Power BI', 'DAX', 'Power Query', 'Data Modelling'],
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiYjk0NjI3M2QtMTI1Yi00NzhlLWJkZjYtNTNiYmU2MDg2OGI4IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9&pageName=6f17c5c2130b902c6a00'
+  },
+  {
+    emoji: '🏏', title: 'IPL Analysis Dashboard (2008\u20132022)', cat: 'Power BI · SQL · Sports Analytics',
+    about: 'A comprehensive Power BI dashboard covering every IPL season from 2008 to 2022. The project covered the full BI workflow: connecting to real databases (MS SQL Server and PostgreSQL), cleaning and modelling large datasets in Power Query, writing advanced DAX measures with time intelligence, and designing an intuitive dashboard with KPIs like winners, top scorers, and venue insights.',
+    features: [
+      'Connected to MS SQL Server and PostgreSQL databases',
+      'Full data cleaning and modelling in Power Query',
+      'Advanced DAX measures with time intelligence',
+      'Season-by-season winner and performance tracking',
+      'Top scorer and player performance analysis',
+      'Venue-level insights and match statistics'
+    ],
+    tech: ['Power BI', 'DAX', 'Power Query', 'MS SQL Server', 'PostgreSQL', 'Time Intelligence'],
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiODc5YmMxM2YtYmZmNS00ZWUyLTg3NmItYmI5ODI4Mjg3YTRhIiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9'
+  },
+  {
+    emoji: '🛍\uFE0F', title: 'Customer Shopping Behaviour Dashboard', cat: 'Power BI · SQL · Retail Analytics',
+    about: 'A Power BI dashboard built from 3,900 retail transactions across 50 locations, exploring customer shopping behaviour. Engineered features like age bins and purchase frequency, handled missing data with category-level medians, and integrated SQL Server for deeper analysis. The goal was to turn raw purchase data into actionable insights for loyalty, marketing, and subscription strategy.',
+    features: [
+      '3,900 transactions analysed across 50 retail locations',
+      'Feature engineering: age bins, purchase frequency',
+      'Missing data handling with category-level medians',
+      'SQL Server integration for deeper analysis',
+      'Loyalty and subscription strategy insights',
+      'Marketing segmentation and targeting recommendations'
+    ],
+    tech: ['Power BI', 'DAX', 'SQL Server', 'Power Query', 'Feature Engineering'],
+    demo: 'https://app.powerbi.com/view?r=eyJrIjoiYjhiZDZlNjQtYmQ2Ni00OWRjLTljZmEtZTIwYTdhMzA0ZDE0IiwidCI6ImJjZWYxYWJlLWVjZjgtNDMxNy1iM2FmLTY0NzQ3MmMwM2Y3OSJ9'
   },
   {
     emoji: '📊', title: 'Blinkit Sales Analysis Dashboard', cat: 'Power BI · Retail Analytics',
